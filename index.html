@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606260001">
+<meta name="app-version" content="202606300006">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <style>
@@ -154,8 +154,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .i-start-inp{font-size:10px;color:var(--text3);outline:none;border:.5px solid var(--bord2);background:var(--bg);border-radius:4px;padding:2px 4px;font-family:inherit;height:22px;flex-shrink:0;cursor:pointer;width:104px}
 .kr-brand-sel{font-size:11px;color:var(--text);outline:none;padding:5px 8px;border-radius:5px;border:.5px solid var(--bord2);background:var(--bg);font-family:inherit;height:30px;width:100%}
 .kr-brand-sel:focus{border-color:var(--burg)}
-.gi-card{border-bottom:.5px solid var(--bg3)}
+.gi-card{display:block;border-bottom:.5px solid var(--bg3)}
+.init-item.gi-card{display:block}
 .gi-card:last-child{border-bottom:none}
+.gi-feeds{margin:0}
+.gi-feeds-toggle{display:flex;align-items:center;gap:6px;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);padding:2px 0;text-align:left}
+.gi-feeds-toggle:hover{color:var(--burg)}
+.gi-feeds-toggle .gi-feeds-chev{transition:transform .2s}
+.gi-feeds.open .gi-feeds-chev{transform:rotate(180deg)}
+.gi-feeds-list{display:none;flex-direction:column;gap:3px;padding:4px 0 2px}
+.gi-feeds.open .gi-feeds-list{display:flex}
+.gi-feeds-row{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--text2);padding:2px 0}
+.gi-link-row{display:flex;align-items:center;gap:6px;padding:3px 0}
+.gi-link-a{flex:1;color:var(--burg);text-decoration:none;font-size:11.5px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gi-link-a:hover{text-decoration:underline}
+.gi-link-add{background:none;border:none;padding:0;font-size:10px;font-weight:600;color:var(--burg);cursor:pointer;font-family:inherit}
+.gi-link-add:hover{text-decoration:underline}
+.gi-link-open{flex-shrink:0;color:var(--burg);text-decoration:none;font-size:13px;padding:0 2px}
+.gi-link-open:hover{color:var(--burg2)}
+.kr-cur-stamp{font-size:9px;color:var(--text3);font-style:italic;margin-top:3px;line-height:1.3}
+.kr-smry-table tbody tr.kr-exp-row td{background:var(--bg2);padding:0}
+.kr-exp-wrap{padding:8px 14px 10px}
+.kr-exp-init{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:.5px solid var(--bg3);font-size:12px}
+.kr-exp-init:last-child{border-bottom:none}
+.kr-exp-empty{font-size:11px;color:var(--text3);font-style:italic;padding:4px 0}
+.kr-smry-caret{cursor:pointer;color:var(--text3);transition:transform .2s;display:inline-block}
+tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
+.si-kr-picker{max-height:240px;overflow:auto;border:.5px solid var(--bord2);border-radius:6px;padding:8px;margin-bottom:11px}
+.si-kr-grp{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);margin:8px 0 4px}
+.si-kr-grp:first-child{margin-top:0}
+.si-kr-chk{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text);cursor:pointer;padding:4px 2px}
+.si-kr-chk input{accent-color:var(--burg);cursor:pointer;width:auto;margin:0;flex-shrink:0}
+.modal .si-kr-chk input,.modal .si-kr-picker input[type=checkbox]{width:auto;margin:0;flex-shrink:0;padding:0}
 .gi-sum{display:flex;align-items:center;gap:6px;padding:4px 0}
 .gi-krtags{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
 .gi-msbadge{font-size:8.5px;font-weight:700;color:var(--burg);background:var(--bg3);border-radius:99px;padding:1px 6px;flex-shrink:0}
@@ -179,7 +209,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gi-krdd{position:relative;flex-shrink:0}
 .gi-krdd-btn{font-size:10px;font-weight:700;color:var(--text2);border:.5px solid var(--bord2);background:var(--bg);border-radius:5px;padding:2px 7px;height:24px;cursor:pointer;font-family:inherit;white-space:nowrap}
 .gi-krdd-btn:hover{border-color:var(--burg);color:var(--burg)}
-.gi-krdd-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);z-index:50;background:var(--bg);border:.5px solid var(--bord2);border-radius:8px;box-shadow:0 6px 24px rgba(90,0,50,.18);padding:8px;width:300px;max-height:260px;overflow:auto}
+.gi-krdd-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);z-index:50;background:var(--bg);border:.5px solid var(--bord2);border-radius:8px;box-shadow:0 6px 24px rgba(90,0,50,.18);padding:8px;width:360px;max-height:420px;overflow:auto}
+.gi-krdd-grp{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);margin:8px 0 3px;padding-top:5px;border-top:.5px solid var(--bg3)}
+.gi-krdd-menu .gi-krdd-grp:first-child{margin-top:0;padding-top:0;border-top:none}
 .gi-krdd-menu.open{display:block}
 .gi-krdd-hd{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);margin-bottom:6px}
 .gi-krdd-menu .gi-krchk{padding:3px 2px}
@@ -188,6 +220,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .gi-ms-row{display:flex;align-items:center;gap:6px;padding:3px 0}
 .gi-krdetails summary::-webkit-details-marker{display:none}
 .gi-ms-hdr{display:flex;gap:6px;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text3);padding:2px 0 4px}
+.gi-ms-cols{margin-left:auto;display:flex;gap:6px;font-size:8.5px;font-weight:700}
 .kr-init-mini{display:flex;flex-direction:column;gap:2px}
 .init-mini{display:flex;align-items:center;gap:7px;padding:4px 6px;border-radius:6px;cursor:pointer;transition:background .1s}
 .init-mini:hover{background:var(--bg3)}
@@ -300,6 +333,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mtg-task-comment:hover,.mtg-task-comment:focus{background:var(--bg3)}
 .mtg-task-comment:empty:before{content:attr(data-placeholder);color:var(--text3);opacity:.5;pointer-events:none}
 .mtg-task-meta{display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap}
+.mtg-task-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .mtg-task-av{width:18px;height:18px;border-radius:50%;font-size:7px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .mtg-task-date{font-size:10px;color:var(--text3)}
 .mtg-task-date.overdue{color:var(--lake);font-weight:600}
@@ -466,7 +500,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .kst-av{width:22px;height:22px;border-radius:50%;font-size:7.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .kst-date{font-size:11px;color:var(--text3);white-space:nowrap}
 /* Initiatives summary */
-.init-smry-group{background:var(--bg);border:.5px solid var(--bord);border-radius:var(--rlg);overflow:hidden;margin-bottom:12px;box-shadow:0 1px 4px rgba(90,0,50,.05)}
+.init-smry-group{background:var(--bg);border:.5px solid var(--bord);border-radius:var(--rlg);overflow:visible;margin-bottom:12px;box-shadow:0 1px 4px rgba(90,0,50,.05)}
+.init-smry-group-head{border-radius:var(--rlg) var(--rlg) 0 0}
 .init-smry-group-head{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--bg2);border-bottom:.5px solid var(--bord)}
 .isg-badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px}
 .isg-kr{font-size:11px;font-weight:700;color:var(--text2);flex:1}
@@ -855,7 +890,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <span style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:.04em">Sort</span>
       <button class="smry-filter active" data-sort="due" onclick="setInitSort(this,'due')">Due date</button>
       <button class="smry-filter" data-sort="owner" onclick="setInitSort(this,'owner')">Owner</button>
-      <button class="smry-filter" data-sort="none" onclick="setInitSort(this,'none')">Manual</button>
     </div>
   </div>
   <div id="init-smry-body"></div>
@@ -1153,10 +1187,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="modal-veil" id="si-mv">
   <div class="modal">
     <h3>Add Initiative</h3>
-    <label>Key Result</label>
-    <select id="si-kr" style="width:100%;padding:7px 10px;border-radius:6px;border:.5px solid var(--bord2);font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);margin-bottom:11px;outline:none">
-      <!-- filled by JS -->
-    </select>
+    <label>Key Results (tick all this initiative delivers to)</label>
+    <div id="si-kr-picker" class="si-kr-picker"><!-- filled by JS --></div>
     <label>Initiative Title</label>
     <input type="text" id="si-title" placeholder="e.g. Launch sustainability report Q2">
     <div class="modal-r2">
@@ -1235,8 +1267,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <label>Why does this matter? <span style="color:var(--lake)">*</span></label>
     <textarea id="bl-edit-rationale" maxlength="280" rows="2" style="resize:none"></textarea>
     <div style="text-align:right;font-size:10px;color:var(--text3);margin-top:-8px;margin-bottom:8px"><span id="bl-edit-char-count">0</span> / 280</div>
-    <label>Which Key Result does this support?</label>
-    <select id="bl-edit-okr-link"></select>
+    <label>Which Key Results does this support?</label>
+    <div id="bl-edit-okr-link-picker" class="si-kr-picker"></div>
     <div class="modal-btns">
       <button class="btn-c" onclick="closeEditBacklogModal()">Cancel</button>
       <button class="btn-s" onclick="saveEditBacklogItem()">Save Changes</button>
@@ -1284,8 +1316,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <option value="Large">Large</option>
         </select>
       </div>
-      <div><label>Key Result <span style="color:var(--lake)">*</span></label>
-        <select id="bl-okr-link"></select>
+      <div style="grid-column:1 / -1"><label>Key Results <span style="color:var(--lake)">*</span> <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(tick all this supports)</span></label>
+        <div id="bl-okr-link-picker" class="si-kr-picker"></div>
       </div>
     </div>
     <div class="modal-r2">
@@ -1639,9 +1671,11 @@ window.goToKRFromProject=function(krNum){
 /* OKR Rendering */
 function parseMetric(v){if(v===undefined||v===null)return null;var t=String(v).replace(/,/g,'').trim();if(!t)return null;var m=t.match(/-?\d+(\.\d+)?/);if(!m)return null;var n=parseFloat(m[0]);return isFinite(n)?n:null;}
 function computeKRProgress(start,cur,tgt){var a=parseMetric(start),c=parseMetric(cur),b=parseMetric(tgt);if(a===null||c===null||b===null)return null;if(b-a===0)return null;return Math.round((c-a)/(b-a)*100);}
+function curStampText(kr){if(!kr||!kr.curUpdated)return 'Current not yet updated';var d=new Date(kr.curUpdated);if(isNaN(d.getTime()))return 'Current not yet updated';var ds=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});var by=(kr.curBy&&OWNERS[kr.curBy])?(' by '+OWNERS[kr.curBy]):'';return 'Current updated '+ds+by;}
+window.updateKRCurrent=function(el){var row=el.closest('.kr-row');if(!row){recomputeKR(el);return;}var prev=el.getAttribute('data-prevcur')||'';var now=el.value;if(now!==prev){var iso=new Date().toISOString();row.dataset.curupdated=iso;row.dataset.curby=currentUser||'';el.setAttribute('data-prevcur',now);var stamp=el.parentElement.querySelector('.kr-cur-stamp');if(stamp){var d=new Date(iso);var by=(currentUser&&OWNERS[currentUser])?(' by '+OWNERS[currentUser]):'';stamp.textContent='Current updated '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+by;}}recomputeKR(el);};
 window.recomputeKR=function(el){var row=el.closest('.kr-row');if(!row)return;var body=row.querySelector('.kr-body');if(!body)return;var ti=Array.prototype.slice.call(body.querySelectorAll('.ke-inp:not([type=date]):not([type=number]):not(.ke-pct-in)'));var start=ti[0]?ti[0].value:'',tgt=ti[1]?ti[1].value:'',cur=ti[2]?ti[2].value:'';var comp=computeKRProgress(start,cur,tgt);var pv=comp===null?0:comp;var bw=Math.max(0,Math.min(100,pv));row.dataset.progress=pv;if(comp===null)row.dataset.nopct='1';else row.removeAttribute('data-nopct');var lbl=row.querySelector('.kr-computed-pct');if(lbl){lbl.textContent=comp===null?'\u2014':comp+'%';lbl.classList.toggle('nopct',comp===null);}var bodyFill=body.querySelector('.kr-body-fill');if(bodyFill)bodyFill.style.width=bw+'%';var miniFill=row.querySelector('.kr-sum .kr-mini-fill');if(miniFill)miniFill.style.width=bw+'%';var sp=row.querySelector('.kr-sum-pct');if(sp)sp.textContent=comp===null?'\u2014':comp+'%';recalcObj(row.closest('.obj-card'));debouncedSave();};
 function genId(p){return (p||'in')+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);}
-function normInit(it){it=it||{};it.id=it.id||genId('in');it.t=it.t||'';it.own=it.own||'';it.start=it.start||'';it.date=it.date||'';it.d=it.d?1:0;if(!Array.isArray(it.krs))it.krs=[];if(!Array.isArray(it.milestones))it.milestones=[];if(!Array.isArray(it.blockers))it.blockers=[];if(!Array.isArray(it.questions))it.questions=[];it.milestones.forEach(function(m){m.id=m.id||genId('ms');m.t=m.t||'';m.own=m.own||'';m.due=m.due||'';m.st=m.st||'on';});function nb(x){return {text:(x&&x.text)||'',resolved:(x&&x.resolved)?1:0,resolution:(x&&x.resolution)||'',ms:(x&&x.ms)||''};}it.blockers=it.blockers.map(nb);it.questions=it.questions.map(nb);return it;}
+function normInit(it){it=it||{};it.id=it.id||genId('in');it.t=it.t||'';it.own=it.own||'';it.start=it.start||'';it.date=it.date||'';it.d=it.d?1:0;if(!Array.isArray(it.krs))it.krs=[];if(!Array.isArray(it.links)){it.links=[];if(it.link)it.links.push({id:genId('ln'),url:it.link});}it.links.forEach(function(l){l.id=l.id||genId('ln');l.url=l.url||'';});if(!Array.isArray(it.milestones))it.milestones=[];if(!Array.isArray(it.blockers))it.blockers=[];if(!Array.isArray(it.questions))it.questions=[];it.milestones.forEach(function(m){m.id=m.id||genId('ms');m.t=m.t||'';m.own=m.own||'';m.due=m.due||'';m.st=m.st||'on';});function nb(x){return {text:(x&&x.text)||'',resolved:(x&&x.resolved)?1:0,resolution:(x&&x.resolution)||'',ms:(x&&x.ms)||''};}it.blockers=it.blockers.map(nb);it.questions=it.questions.map(nb);return it;}
 function initById(id){for(var i=0;i<INITIATIVES.length;i++)if(INITIATIVES[i].id===id)return INITIATIVES[i];return null;}
 function initsForKR(krNum){return INITIATIVES.filter(function(i){return i.krs.indexOf(krNum)>-1;});}
 function allKRRefs(){var out=[];OKRS.forEach(function(o){(o.krs||[]).forEach(function(kr){out.push({num:kr.num,title:kr.title,bc:o.bc});});});return out;}
@@ -1683,12 +1717,22 @@ function initCardHTML(it,ctxKr){
   if(blN)badges+='<span class="mini-badge mb-bl" title="Open blockers">\uD83D\uDEA7 '+blN+'</span>';
   if(qsN)badges+='<span class="mini-badge mb-q" title="Open questions">\u2753 '+qsN+'</span>';
   // KR tick-list dropdown (which KRs this initiative delivers to)
-  var krChecks=refs.map(function(r){var on=(it.krs||[]).indexOf(r.num)>-1;return '<label class="gi-krchk"><input type="checkbox" '+(on?'checked':'')+' onchange="giToggleKRLink(\''+it.id+'\',\''+esc(r.num)+'\',this.checked)"><span class="kst-num" style="font-size:8px">'+esc(r.num)+'</span> '+esc(r.title)+'</label>';}).join('');
+  var krChecks=OKRS.map(function(o){
+    if(!o.krs||!o.krs.length)return '';
+    return '<div class="gi-krdd-grp">'+esc(o.badge+' \u00b7 '+o.title)+'</div>'+o.krs.map(function(kr){
+      var on=(it.krs||[]).indexOf(kr.num)>-1;
+      return '<label class="gi-krchk"><input type="checkbox" '+(on?'checked':'')+' onchange="giToggleKRLink(\''+it.id+'\',\''+esc(kr.num)+'\',this.checked)"><span class="kst-num" style="font-size:8px">'+esc(kr.num)+'</span> '+esc(kr.title)+'</label>';
+    }).join('');
+  }).join('');
   var krDD='<div class="gi-krdd"><button class="gi-krdd-btn" onclick="event.stopPropagation();giToggleKRMenu(event,\''+it.id+'\')" title="Which Key Results this delivers to">KR ('+krCount+') \u25BE</button>'+
     '<div class="gi-krdd-menu" id="krmenu-'+it.id+'"><div class="gi-krdd-hd">Delivers toward Key Results</div>'+krChecks+'</div></div>';
   // Milestones rows
   var msRows=(it.milestones.length?it.milestones.map(function(m){return '<div class="gi-ms-row"><input type="text" class="ke-inp" style="flex:1;min-width:80px" value="'+esc(m.t)+'" placeholder="Milestone" onblur="giSaveMsField(\''+it.id+'\',\''+m.id+'\',\'t\',this)"><select class="i-owner-sel" onchange="giSaveMsField(\''+it.id+'\',\''+m.id+'\',\'own\',this)">'+ownerSelFull(m.own)+'</select><input type="date" class="i-date-inp" value="'+esc(m.due)+'" onchange="giSaveMsField(\''+it.id+'\',\''+m.id+'\',\'due\',this)"><select class="ke-sel" style="height:24px;width:auto;font-size:10px" onchange="giSaveMsField(\''+it.id+'\',\''+m.id+'\',\'st\',this)">'+stSel(m.st)+'</select><button class="gi-itemdel" title="Delete milestone" onclick="giDelMs(\''+it.id+'\',\''+m.id+'\')">'+BIN+'</button></div>';}).join(''):'<div class="ks-empty">No milestones</div>');
   function bq(kind){var arr=it[kind]||[];var cls=kind==='blockers'?'gib-item':'giq-item';if(!arr.length)return '<div class="ks-empty">No '+kind+'</div>';return arr.map(function(x,idx){var msopts='<option value="">General</option>'+it.milestones.map(function(m){return '<option value="'+m.id+'"'+(x.ms===m.id?' selected':'')+'>'+esc(m.t||'Milestone')+'</option>';}).join('');return '<div class="'+cls+'" style="display:flex;align-items:center;gap:6px;padding:3px 0"><div class="icheck'+(x.resolved?' done':'')+'" style="width:14px;height:14px" onclick="giToggleBQ(\''+it.id+'\',\''+kind+'\','+idx+')">'+(x.resolved?'\u2713':'')+'</div><span class="item-text'+(x.resolved?' crossed':'')+'" contenteditable="true" style="flex:1;font-size:11.5px" onblur="giSaveBQ(\''+it.id+'\',\''+kind+'\','+idx+',\'text\',this)">'+esc(x.text)+'</span><select class="i-owner-sel" title="Linked milestone" onchange="giSaveBQ(\''+it.id+'\',\''+kind+'\','+idx+',\'ms\',this)">'+msopts+'</select><button class="gi-itemdel" title="Delete" onclick="giDelBQ(\''+it.id+'\',\''+kind+'\','+idx+')">'+BIN+'</button></div>';}).join('');}
+  var krTitleMap={};refs.forEach(function(r){krTitleMap[r.num]=r;});
+  var feedsRows=(it.krs||[]).length?(it.krs).map(function(kn){var r=krTitleMap[kn];return '<div class="gi-feeds-row"><span class="kst-num" style="font-size:8px">'+esc(kn)+'</span><span>'+esc(r?r.title:'(unknown KR)')+'</span></div>';}).join(''):'<div class="ks-empty">Not linked to any Key Result yet</div>';
+  var feedsChev='<svg class="gi-feeds-chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+  var linkRows=(it.links&&it.links.length)?it.links.map(function(l){return '<div class="gi-link-row"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;color:var(--text3)"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><a class="gi-link-a" href="'+esc(l.url)+'" target="_blank">'+esc(l.url)+'</a><button class="gi-itemdel" title="Delete link" onclick="giDelLink(\''+it.id+'\',\''+l.id+'\')">'+BIN+'</button></div>';}).join(''):'<div class="ks-empty">No links</div>';
   return '<div class="init-item gi-card'+(open?' open':'')+'" data-iid="'+it.id+'">'+
     '<div class="gi-sum">'+
       '<select class="i-status-sel'+(it.d?' is-done':'')+'" onclick="event.stopPropagation()" onchange="giSetStatus(\''+it.id+'\',this)" title="Status">'+
@@ -1702,11 +1746,13 @@ function initCardHTML(it,ctxKr){
       '<input type="date" class="i-start-inp" title="Start date" onclick="event.stopPropagation()" value="'+esc(it.start)+'" onchange="giSaveSel(\''+it.id+'\',\'start\',this)">'+
       '<input type="date" class="i-date-inp" title="Due date" onclick="event.stopPropagation()" value="'+esc(it.date)+'" onchange="giSaveSel(\''+it.id+'\',\'date\',this)">'+
       '<button class="gi-expand" title="Details" onclick="event.stopPropagation();giToggle(\''+it.id+'\')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>'+
-      '<button class="iremove" title="Unlink from this Key Result" onclick="event.stopPropagation();giUnlink(\''+it.id+'\',\''+esc(ctxKr||'')+'\')">&times;</button>'+
+      (ctxKr?'<button class="iremove" title="Unlink from this Key Result" onclick="event.stopPropagation();giUnlink(\''+it.id+'\',\''+esc(ctxKr||'')+'\')">&times;</button>':'')+
       '<button class="gi-del" title="Delete initiative entirely" onclick="event.stopPropagation();giDelete(\''+it.id+'\')">'+BIN+'</button>'+
     '</div>'+
     '<div class="gi-body">'+
-      '<div class="gi-sec"><div class="gi-sec-h">Milestones <button class="ks-add" onclick="giAddMs(\''+it.id+'\')">+ Add</button></div>'+(it.milestones.length?'<div class="gi-ms-hdr"><span style="flex:1">Milestone</span><span style="width:92px">Owner</span><span style="width:104px">Due</span><span style="width:80px">Status</span><span style="width:16px"></span></div>':'')+msRows+'</div>'+
+      '<div class="gi-sec"><div class="gi-feeds"><button class="gi-feeds-toggle" onclick="event.stopPropagation();this.closest(\'.gi-feeds\').classList.toggle(\'open\')">'+feedsChev+'Feeds into '+krCount+' Key Result'+(krCount!==1?'s':'')+'</button><div class="gi-feeds-list">'+feedsRows+'</div></div></div>'+
+      '<div class="gi-sec"><div class="gi-sec-h">\uD83D\uDD17 Links <button class="ks-add" onclick="giAddLink(\''+it.id+'\')">+ Add</button></div>'+linkRows+'</div>'+
+      '<div class="gi-sec"><div class="gi-sec-h">Milestones <button class="ks-add" onclick="giAddMs(\''+it.id+'\')">+ Add</button>'+(it.milestones.length?'<span class="gi-ms-cols"><span style="width:92px">Owner</span><span style="width:104px">Due</span><span style="width:80px">Status</span><span style="width:16px"></span></span>':'')+'</div>'+msRows+'</div>'+
       '<div class="gi-sec"><div class="gi-sec-h">\uD83D\uDEA7 Blockers <button class="ks-add" onclick="giAddB(\''+it.id+'\')">+ Add</button></div>'+bq('blockers')+'</div>'+
       '<div class="gi-sec"><div class="gi-sec-h">\u2753 Questions <button class="ks-add" onclick="giAddQ(\''+it.id+'\')">+ Add</button></div>'+bq('questions')+'</div>'+
     '</div>'+
@@ -1718,6 +1764,8 @@ window.giSetStatus=function(id,sel){var it=initById(id);if(!it)return;it.d=(sel.
 window.giDelete=function(id){var it=initById(id);if(!it)return;if(!confirm('Delete this initiative entirely?\n\n\u201c'+(it.t||'Untitled')+'\u201d\n\nThis removes it from ALL linked Key Results and cannot be undone.\nTo only remove it from this one KR, use Unlink (\u00d7) instead.'))return;var gi=INITIATIVES.indexOf(it);if(gi>-1)INITIATIVES.splice(gi,1);delete _openInits[id];refreshInits();debouncedSave();};
 window.giSave=function(id,field,el){var it=initById(id);if(!it)return;it[field]=el.textContent.trim();debouncedSave();};
 window.giSaveSel=function(id,field,el){var it=initById(id);if(!it)return;it[field]=el.value;debouncedSave();};
+window.giAddLink=function(id){var it=initById(id);if(!it)return;var url=window.prompt('Link URL:','https://');if(url===null)return;url=url.trim();if(!url||url==='https://')return;if(!/^https?:\/\//.test(url))url='https://'+url;if(!Array.isArray(it.links))it.links=[];it.links.push({id:genId('ln'),url:url});_openInits[id]=true;refreshInits();debouncedSave();};
+window.giDelLink=function(id,lid){var it=initById(id);if(!it||!it.links)return;it.links=it.links.filter(function(l){return l.id!==lid;});refreshInits();debouncedSave();};
 window.addInitiativeToKR=function(krNum){var it=normInit({krs:[krNum],t:'New initiative'});INITIATIVES.push(it);_openInits[it.id]=false;refreshInits();setTimeout(function(){var c=document.querySelector('.gi-card[data-iid="'+it.id+'"] .itext');if(c)focusSel(c);},40);debouncedSave();};
 window.giUnlink=function(id,krNum){var it=initById(id);if(!it)return;var i=it.krs.indexOf(krNum);if(i>-1)it.krs.splice(i,1);if(it.krs.length===0){var gi=INITIATIVES.indexOf(it);if(gi>-1)INITIATIVES.splice(gi,1);delete _openInits[id];}refreshInits();debouncedSave();};
 window.giToggleKRLink=function(id,krNum,checked){var it=initById(id);if(!it)return;var i=it.krs.indexOf(krNum);if(checked){if(i<0)it.krs.push(krNum);}else{if(it.krs.length<=1){refreshInits();return;}if(i>-1)it.krs.splice(i,1);}refreshInits();debouncedSave();};
@@ -1799,7 +1847,7 @@ function krHTML(kr){
     indicators += '<span class="kr-indicator has-questions" title="' + unresolvedQuestions + ' unresolved question' + (unresolvedQuestions > 1 ? 's' : '') + '">' + unresolvedQuestions + ' ❓</span>';
   }
   
-  return '<div class="kr-row" data-owner="'+kr.own+'" data-progress="'+_krPV+'"'+(_krComp===null?' data-nopct="1"':'')+' data-status="'+kr.st+'" data-due="'+esc(kr.date||'')+'" data-krnum="'+esc(kr.num)+'">'+
+  return '<div class="kr-row" data-owner="'+kr.own+'" data-progress="'+_krPV+'"'+(_krComp===null?' data-nopct="1"':'')+' data-status="'+kr.st+'" data-due="'+esc(kr.date||'')+'" data-krnum="'+esc(kr.num)+'" data-curupdated="'+esc(kr.curUpdated||'')+'" data-curby="'+esc(kr.curBy||'')+'">'+
     '<div class="kr-sum" onclick="toggleKR(this.parentElement)">'+
       '<span class="kr-num">'+esc(kr.num)+'</span>'+
       '<span class="kr-sum-title">'+esc(kr.title)+'</span>'+
@@ -1816,7 +1864,7 @@ function krHTML(kr){
         '<div class="ke-field sml"><div class="ke-label">Due Date</div><input type="date" class="ke-inp" value="'+esc(kr.date)+'"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Start</div><input type="text" class="ke-inp" value="'+esc(kr.start||'')+'" onblur="recomputeKR(this)"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Target</div><input type="text" class="ke-inp" value="'+esc(kr.tgt)+'" onblur="recomputeKR(this)"></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp" value="'+esc(kr.cur)+'" onblur="recomputeKR(this)"></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp kr-cur-inp" value="'+esc(kr.cur)+'" data-prevcur="'+esc(kr.cur)+'" onblur="updateKRCurrent(this)"><div class="kr-cur-stamp">'+curStampText(kr)+'</div></div>'+
         '<div class="ke-field sml"><div class="ke-label">Brand</div><select class="kr-brand-sel" onchange="debouncedSave()">'+brandOpts(kr.brand||'')+'</select></div>'+
         '<div class="ke-field sml"><div class="ke-label">Timesc. Current</div><select class="ke-sel" onchange="updateKRTimescale(this)"><option value=""'+((!kr.timescale)?' selected':'')+'>—</option><option value="Month"'+(kr.timescale==='Month'?' selected':'')+'>Month</option><option value="YTD"'+(kr.timescale==='YTD'?' selected':'')+'>YTD</option><option value="R12"'+(kr.timescale==='R12'?' selected':'')+'>R12</option><option value="FY"'+(kr.timescale==='FY'?' selected':'')+'>FY</option></select></div>'+
         '<div class="ke-field med"><div class="ke-label">Progress &nbsp; <span style="font-size:9px;color:var(--text3);font-weight:500;text-transform:none">Status: </span><select class="ke-sel" style="height:20px;font-size:10px;display:inline-block;width:auto;padding:1px 5px" onchange="updateStatus(this)">'+stSel(kr.st)+'</select></div>'+
@@ -2191,8 +2239,8 @@ function renderKRSummary(){
       if(krPillarFilter!=='all'&&o.pillar!==krPillarFilter)return;
       var initCount=initsForKR(kr.num).length;
       var tr=document.createElement('tr');tr.dataset.status=kr.st;
-      tr.innerHTML='<td><span class="kst-obj '+o.bc+'" title="'+esc(o.title)+'" style="font-size:8px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block">'+esc(o.title.length>18?o.title.substring(0,18)+'\u2026':o.title)+'</span></td>'+
-        '<td><span class="kst-num">'+esc(kr.num)+'</span></td>'+
+      tr.innerHTML='<td><span class="kr-smry-caret"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></span> <span class="kst-obj '+o.bc+'" title="'+esc(o.title)+'" style="font-size:8px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle">'+esc(o.title.length>18?o.title.substring(0,18)+'\u2026':o.title)+'</span></td>'+
+        '<td><span class="kst-num" style="cursor:pointer" title="Open in OKR Board" onclick="event.stopPropagation();goToKRFromProject(\''+esc(kr.num)+'\');switchPageById(\'view-okr\')">'+esc(kr.num)+' \u2197</span></td>'+
         '<td style="font-size:12.5px;font-weight:600;color:var(--text)">'+esc(kr.title)+'</td>'+
         '<td><div class="kst-prog-wrap"><div class="kst-prog-track"><div class="kst-prog-fill kf-'+kr.st+'" style="width:'+kr.p+'%"></div></div><span class="kst-pct">'+kr.p+'%</span></div></td>'+
         '<td><span class="kr-badge kb-'+kr.st+'">'+SL[kr.st]+'</span></td>'+
@@ -2200,7 +2248,7 @@ function renderKRSummary(){
         '<td><span class="kst-date">'+fmtDate(kr.date)+'</span></td>'+
         '<td style="text-align:center"><span style="font-size:11px;font-weight:700;color:'+(initCount?'var(--burg)':'var(--text3)')+'">'+initCount+'</span></td>';
       tr.style.cursor='pointer';
-      tr.onclick=function(){goToKRFromProject(kr.num);switchPageById('view-okr');};
+      tr.onclick=function(){toggleKRSmryRow(tr,kr.num);};
       tbody.appendChild(tr);
     });
   });
@@ -2246,6 +2294,22 @@ function renderKRSummary(){
     });
   });
 }
+window.toggleKRSmryRow=function(tr,krNum){
+  var next=tr.nextSibling;
+  if(tr.classList.contains('kr-open')){
+    tr.classList.remove('kr-open');
+    if(next&&next.classList&&next.classList.contains('kr-exp-row'))next.parentNode.removeChild(next);
+    return;
+  }
+  tr.classList.add('kr-open');
+  var inits=initsForKR(krNum);
+  var rows=inits.length?inits.map(function(i){
+    return '<div class="kr-exp-init" style="cursor:pointer" onclick="gotoInitiative(\''+i.id+'\')" title="Open in Initiatives"><span class="mini-check'+(i.d?' done':'')+'" style="width:14px;height:14px;border-radius:3px;border:1.5px solid var(--bord2);display:inline-flex;align-items:center;justify-content:center;font-size:8px;color:#fff">'+(i.d?'\u2713':'')+'</span><span style="flex:1"'+(i.d?' class="crossed"':'')+'>'+esc(i.t)+'</span>'+(i.own?'<div class="kst-av av-'+i.own+'" style="width:18px;height:18px;font-size:7px" title="'+(OWNERS[i.own]||i.own)+'">'+i.own+'</div>':'')+(i.date?'<span class="kst-date">'+fmtDate(i.date)+'</span>':'')+'</div>';
+  }).join(''):'<div class="kr-exp-empty">No initiatives linked to this Key Result.</div>';
+  var exp=document.createElement('tr');exp.className='kr-exp-row';
+  exp.innerHTML='<td colspan="8"><div class="kr-exp-wrap">'+rows+'</div></td>';
+  if(tr.nextSibling)tr.parentNode.insertBefore(exp,tr.nextSibling);else tr.parentNode.appendChild(exp);
+};
 window.filterKRSmry=function(btn,filter){btn.closest('div').querySelectorAll('.smry-filter').forEach(function(t){t.classList.remove('active');});btn.classList.add('active');krSmryFilter=filter;renderKRSummary();};
 var krSourceFilter='all';
 window.filterKRPillar=function(btn,filter){btn.closest('div').querySelectorAll('.smry-filter').forEach(function(t){t.classList.remove('active');});btn.classList.add('active');krPillarFilter=filter;renderKRSummary();};
@@ -2262,89 +2326,32 @@ function renderInitSummary(){
   renderInitObjPicker();
   container.innerHTML='';
   var tod=today();
-  var PRC={P1:'#5a0032',P2:'#1a7a4a',P3:'#1a4a8b',P4:'#5a1a8b',P5:'#a04000'};
+  /* Map each KR number -> its objective (for objective/pillar filtering) */
+  var krObj={};OKRS.forEach(function(o){(o.krs||[]).forEach(function(kr){krObj[kr.num]=o;});});
   var INIT_MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var initDueCutoff=null;
   if(initDueFilter!=='all'){var imIdx=INIT_MONTHS.indexOf(initDueFilter);if(imIdx>=0){var ny=new Date().getFullYear();var ld=new Date(ny,imIdx+1,0);initDueCutoff=ld.getFullYear()+'-'+String(ld.getMonth()+1).padStart(2,'0')+'-'+String(ld.getDate()).padStart(2,'0');}}
-  function passes(i){if(initSmryFilter==='open'&&i.d)return false;if(initSmryFilter==='done'&&!i.d)return false;if(activeOwner&&i.own!==activeOwner)return false;if(initDueCutoff){if(!i.date)return false;if(i.date>initDueCutoff)return false;}return true;}
-  var showAll=(initSmryFilter==='all'&&!activeOwner&&initDueFilter==='all');
-
-  /* ── OKR Board initiatives grouped by Key Result ── */
-  if(initSourceFilter==='all'||initSourceFilter==='okr'){
-    OKRS.forEach(function(o){
-      if(initObjFilter!=='all'&&o.n!==initObjFilter)return;
-      if(initPillarFilter!=='all'&&o.pillar!==initPillarFilter)return;
-      (o.krs||[]).forEach(function(kr){
-        var all=initsForKR(kr.num);
-        var list=sortInits(all.filter(passes));
-        if(!list.length&&!showAll)return;
-        var doneCnt=all.filter(function(i){return i.d;}).length;
-        var group=document.createElement('div');group.className='init-smry-group';group.style.borderLeft='3px solid '+(PRC[o.pillar]||'#5a0032');
-        group.innerHTML='<div class="init-smry-group-head" style="background:linear-gradient(to right,rgba(0,0,0,.03),transparent)">'+
-          '<span class="isg-badge '+o.bc+'">'+esc(o.badge)+'</span>'+
-          '<span class="kst-num">'+esc(kr.num)+'</span>'+
-          '<span class="isg-kr" style="font-weight:700;color:var(--text);flex:1">'+esc(kr.title)+'</span>'+
-          '<span class="isg-count">'+doneCnt+' / '+all.length+' done</span>'+
-          '<button class="standalone-add-btn" onclick="addInitiativeToKR(\''+esc(kr.num)+'\')">+ Add initiative</button>'+
-        '</div>';
-        var holder=document.createElement('div');holder.className='init-list';holder.setAttribute('data-krnum',kr.num);
-        holder.innerHTML=list.map(function(it){return initCardHTML(it,kr.num);}).join('');
-        if(!list.length){var e=document.createElement('div');e.className='init-smry-row';e.innerHTML='<span style="font-size:11px;color:var(--text3);font-style:italic;padding:4px 0">No initiatives \u2014 click + Add initiative</span>';group.appendChild(e);}
-        group.appendChild(holder);
-        container.appendChild(group);
-      });
-    });
+  function passes(i){
+    if(initSmryFilter==='open'&&i.d)return false;
+    if(initSmryFilter==='done'&&!i.d)return false;
+    if(activeOwner&&i.own!==activeOwner)return false;
+    if(initDueCutoff){if(!i.date)return false;if(i.date>initDueCutoff)return false;}
+    if(initObjFilter!=='all'){var okObj=(i.krs||[]).some(function(kn){return krObj[kn]&&krObj[kn].n===initObjFilter;});if(!okObj)return false;}
+    if(initPillarFilter!=='all'){var okPil=(i.krs||[]).some(function(kn){return krObj[kn]&&krObj[kn].pillar===initPillarFilter;});if(!okPil)return false;}
+    return true;
   }
-
-  /* ── Standalone (pillar) initiatives ── */
-  if(initObjFilter==='all'&&(initSourceFilter==='all'||initSourceFilter==='standalone')){
-    PILLARS.forEach(function(pl){
-      if(initPillarFilter!=='all'&&initPillarFilter!==pl.id)return;
-      var all=STANDALONE_INITS.filter(function(i){return i.pillar===pl.id;});
-      var list=all.filter(passes);
-      if(!list.length&&!showAll)return;
-      var doneCnt=all.filter(function(i){return i.d;}).length;
-      var group=document.createElement('div');group.className='init-smry-group';group.style.borderLeft='3px solid '+(pl.rc||'#5a0032');
-      group.innerHTML='<div class="init-smry-group-head" style="background:linear-gradient(to right,rgba(0,0,0,.03),transparent)">'+
-        '<span class="isg-badge '+pl.bc+'">'+pl.id+'</span>'+
-        '<span class="isg-kr" style="font-weight:800;color:var(--text);flex:1">'+esc(pl.label)+' \u00b7 standalone</span>'+
-        '<span class="isg-count">'+doneCnt+' / '+all.length+' done</span>'+
-        '<button class="standalone-add-btn" onclick="addStandaloneInitForPillar(\''+pl.id+'\')">+ Add initiative</button>'+
-      '</div>';
-      if(!list.length){var e=document.createElement('div');e.className='init-smry-row';e.innerHTML='<span style="font-size:11px;color:var(--text3);font-style:italic;padding:4px 0">No initiatives \u2014 click + Add initiative</span>';group.appendChild(e);}
-      else list.forEach(function(i){
-        var od=!i.d&&i.date&&i.date<tod;var row=document.createElement('div');row.className='init-smry-row';
-        row.innerHTML='<div class="isr-check'+(i.d?' done':'')+'" style="cursor:pointer" data-siid="'+i.id+'">'+(i.d?'\u2713':'')+'</div><span class="isr-text'+(i.d?' crossed':'')+'">'+esc(i.t)+'</span>'+(i.own?'<div class="isr-av av-'+i.own+'" title="'+(OWNERS[i.own]||i.own)+'">'+i.own+'</div>':'')+'<span class="isr-date'+(od?' overdue':'')+'">'+fmtDate(i.date)+(od?' \u26a0':'')+'</span><button class="iremove" onclick="removeStandaloneInit(this,\''+i.id+'\')">\u00d7</button>';
-        row.querySelector('.isr-check').onclick=function(){toggleStandaloneInit(null,i.id);};
-        group.appendChild(row);
-      });
-      container.appendChild(group);
-    });
+  var list=sortInits(INITIATIVES.filter(passes));
+  var doneCnt=list.filter(function(i){return i.d;}).length;
+  var group=document.createElement('div');group.className='init-smry-group';
+  group.innerHTML='<div class="init-smry-group-head"><span style="font-weight:800;color:var(--text)">All initiatives</span><span class="isg-count">'+doneCnt+' / '+list.length+' done</span></div>';
+  if(!list.length){
+    var e=document.createElement('div');e.className='init-smry-row';e.innerHTML='<span style="font-size:11px;color:var(--text3);font-style:italic;padding:4px 0">No initiatives match the current filters.</span>';group.appendChild(e);
+  } else {
+    var holder=document.createElement('div');holder.className='init-list';
+    holder.innerHTML=list.map(function(it){return initCardHTML(it,'');}).join('');
+    group.appendChild(holder);
   }
-
-  /* ── Project KR initiatives (CoHoSt + Other) ── read-only style rows ── */
-  function projGroup(p,kr,idx,badgeColor){
-    var all=(kr.inits||[]);var list=all.filter(passes);if(!list.length&&!showAll)return null;
-    var doneCnt=all.filter(function(i){return i.d;}).length;
-    var group=document.createElement('div');group.className='init-smry-group';group.style.borderLeft='3px solid '+badgeColor;
-    group.innerHTML='<div class="init-smry-group-head" style="background:linear-gradient(to right,rgba(0,0,0,.03),transparent)">'+
-      '<span class="isg-badge" style="background:'+badgeColor+';color:#fff">'+esc(p.name)+'</span>'+
-      '<span class="isg-kr" style="font-weight:700;color:var(--text);flex:1">'+esc(kr.title||('KR '+(idx+1)))+'</span>'+
-      '<span class="isg-count">'+doneCnt+' / '+all.length+' done</span></div>';
-    if(!list.length){var e=document.createElement('div');e.className='init-smry-row';e.innerHTML='<span style="font-size:11px;color:var(--text3);font-style:italic;padding:4px 0">No initiatives</span>';group.appendChild(e);}
-    else list.forEach(function(i){var od=!i.d&&i.date&&i.date<tod;var row=document.createElement('div');row.className='init-smry-row';
-      row.innerHTML='<div class="isr-check'+(i.d?' done':'')+'">'+(i.d?'\u2713':'')+'</div><span class="isr-text'+(i.d?' crossed':'')+'">'+esc(i.t)+'</span>'+(i.own?'<div class="isr-av av-'+i.own+'" title="'+(OWNERS[i.own]||i.own)+'">'+i.own+'</div>':'')+'<span class="isr-date'+(od?' overdue':'')+'">'+fmtDate(i.date)+(od?' \u26a0':'')+'</span>';
-      group.appendChild(row);});
-    return group;
-  }
-  if(false){
-    PROJECTS.forEach(function(p){if(initPillarFilter!=='all'&&p.pillar!==initPillarFilter)return;(p.projectKrs||[]).forEach(function(kr,idx){var g=projGroup(p,kr,idx,'#5a0032');if(g)container.appendChild(g);});});
-  }
-  if(initObjFilter==='all'&&(initSourceFilter==='all'||initSourceFilter==='other')){
-    OTHER_PROJECTS.forEach(function(p){(p.projectKrs||[]).forEach(function(kr,idx){var g=projGroup(p,kr,idx,'#5a1a8b');if(g)container.appendChild(g);});});
-  }
-
-  if(!container.children.length){container.innerHTML='<div style="font-size:12px;color:var(--text3);font-style:italic;padding:16px">No initiatives match the current filters.</div>';}
+  container.appendChild(group);
 }
 
 window.filterInitSmry=function(btn,filter){btn.closest('div').querySelectorAll('.smry-filter').forEach(function(t){t.classList.remove('active');});btn.classList.add('active');initSmryFilter=filter;renderInitSummary();};
@@ -2360,17 +2367,16 @@ window.filterInitSource=function(btn,filter){btn.closest('div').querySelectorAll
 
 /* Standalone initiative modal */
 window.openSIModal=function(presetKR){
-  var sel=document.getElementById('si-kr');
+  var pick=document.getElementById('si-kr-picker');
   var html='';
   OKRS.forEach(function(o){
     if(!o.krs||!o.krs.length)return;
-    html+='<optgroup label="'+esc(o.badge+' · '+o.title)+'">';
+    html+='<div class="si-kr-grp">'+esc(o.badge+' · '+o.title)+'</div>';
     o.krs.forEach(function(kr){
-      html+='<option value="'+esc(kr.num)+'"'+(kr.num===presetKR?' selected':'')+'>'+esc(kr.num+' · '+kr.title)+'</option>';
+      html+='<label class="si-kr-chk"><input type="checkbox" value="'+esc(kr.num)+'"'+(kr.num===presetKR?' checked':'')+'><span class="kst-num" style="font-size:8px">'+esc(kr.num)+'</span> '+esc(kr.title)+'</label>';
     });
-    html+='</optgroup>';
   });
-  sel.innerHTML=html||'<option value="">— no Key Results yet —</option>';
+  pick.innerHTML=html||'<div class="ks-empty">No Key Results yet</div>';
   document.getElementById('si-title').value='';
   document.getElementById('si-own').value='';
   document.getElementById('si-date').value='';
@@ -2383,15 +2389,15 @@ document.getElementById('si-mv').addEventListener('click',function(e){if(e.targe
 window.saveSIModal=function(){
   var title=document.getElementById('si-title').value.trim();
   if(!title){document.getElementById('si-title').focus();return;}
-  var krNum=document.getElementById('si-kr').value;
-  if(!krNum){document.getElementById('si-kr').focus();return;}
+  var checks=document.querySelectorAll('#si-kr-picker input[type=checkbox]:checked');
+  var krs=[];checks.forEach(function(c){krs.push(c.value);});
+  if(!krs.length){alert('Please tick at least one Key Result.');return;}
   var own=document.getElementById('si-own').value;
   var date=document.getElementById('si-date').value;
   var sdate=(document.getElementById('si-start')||{}).value||'';
-  INITIATIVES.push(normInit({t:title,own:own,start:sdate,date:date,d:0,krs:[krNum]}));
+  INITIATIVES.push(normInit({t:title,own:own,start:sdate,date:date,d:0,krs:krs}));
   closeSIModal();
-  if(typeof setInitObj==='function'){var o=objForKR(krNum);if(o)setInitObj(o.n);else renderInitSummary();}
-  else renderInitSummary();
+  renderInitSummary();
   debouncedSave();
 };
 window.addStandaloneInit=function(){var firstKR=(OKRS[0]&&OKRS[0].krs&&OKRS[0].krs[0])?OKRS[0].krs[0].num:'';openSIModal(firstKR);};
@@ -2679,25 +2685,8 @@ function updateMetrics(){
   });
   INITIATIVES.forEach(function(i){if(!i.d&&(!activeOwner||i.own===activeOwner))totalInitiatives++;});
   
-  /* Also count project KRs */
-  PROJECTS.forEach(function(proj) {
-    (proj.projectKrs || []).forEach(function(kr) {
-      if (!activeOwner || kr.own === activeOwner) {
-        visibleKRs.push(kr);
-        statusCount[kr.st]++;
-        totalInitiatives += (kr.inits || []).filter(function(i) { return !i.d; }).length;
-      }
-    });
-  });
-  OTHER_PROJECTS.forEach(function(proj) {
-    (proj.projectKrs || []).forEach(function(kr) {
-      if (!activeOwner || kr.own === activeOwner) {
-        visibleKRs.push(kr);
-        if(statusCount[kr.st]!==undefined)statusCount[kr.st]++;
-        totalInitiatives += (kr.inits || []).filter(function(i) { return !i.d; }).length;
-      }
-    });
-  });
+  /* Project / Other-project KRs and initiatives are intentionally NOT counted here —
+     the dashboard cards reflect OKR-board Key Results and initiatives only. */
   var atRiskOffTrack = statusCount.at + statusCount.off;
 
   // Count initiatives due this month (open only)
@@ -2711,9 +2700,6 @@ function updateMetrics(){
     });
   }
   INITIATIVES.forEach(function(i){if(!i.d&&i.date&&i.date>=nowStr.substring(0,7)&&i.date<=thisMonthEnd)dueThisMonth++;});
-  PROJECTS.forEach(function(p){(p.projectKrs||[]).forEach(function(kr){countDueThisMonth(kr.inits);});(p.tasks||[]).forEach(function(t){if(!t.d&&t.date&&t.date>=nowStr.substring(0,7)&&t.date<=thisMonthEnd)dueThisMonth++;});});
-  OTHER_PROJECTS.forEach(function(p){(p.projectKrs||[]).forEach(function(kr){countDueThisMonth(kr.inits);});});
-  STANDALONE_INITS.forEach(function(i){if(!i.d&&i.date&&i.date>=nowStr.substring(0,7)&&i.date<=thisMonthEnd)dueThisMonth++;});
 
   // Update metric values
   var metrics = document.querySelectorAll('.metric .mv');
@@ -3649,7 +3635,7 @@ updateBackupBadge();
 
 
 
-function captureStateFromDOM(){var newOkrs=[];document.querySelectorAll('.obj-card').forEach(function(card){var n=parseInt(card.id.replace('obj-',''),10);var ex=OKRS.filter(function(o){return o.n===n;})[0]||{};var titleEl=card.querySelector('.obj-title');var obj={n:n,pillar:ex.pillar||'P1',badge:ex.badge||'O'+n,bc:ex.bc||'ob1',rc:ex.rc||'#5a0032',title:titleEl?titleEl.textContent.trim():(ex.title||'Objective '+n),owner:ex.owner||'\u2014',due:ex.due||'\u2014',chips:[],krs:[]};card.querySelectorAll('.kr-row').forEach(function(row){var body=row.querySelector('.kr-body');var num=(row.querySelector('.kr-num')||{}).textContent||'';var krTitle='';if(body){var ke=body.querySelector('.ke-text');krTitle=ke?ke.textContent.trim():'';}if(!krTitle){var st2=row.querySelector('.kr-sum-title');krTitle=st2?st2.textContent.trim():'';}var cur='',tgt='',date=row.dataset.due||'',projId='';if(body){var di=body.querySelector('.ke-inp[type=date]');if(di&&!date)date=di.value;var ti=Array.prototype.slice.call(body.querySelectorAll('.ke-inp:not([type=date]):not([type=number]):not(.ke-pct-in)'));var start='';if(ti[0])start=ti[0].value;if(ti[1])tgt=ti[1].value;if(ti[2])cur=ti[2].value;var timescaleSel=body.querySelector('.ke-sel[onchange*="updateKRTimescale"]');var timescale=timescaleSel?timescaleSel.value:'';var ps=body.querySelector('.kr-linked-proj-sel');if(ps)projId=ps.value;}var brand='';if(body){var bsel=body.querySelector('.kr-brand-sel');if(bsel)brand=bsel.value;}var inits=[];/* initiatives are data-model (global INITIATIVES); not scraped from DOM */var blockers=[];if(body)body.querySelectorAll('.blocker-item').forEach(function(item){var t=(item.querySelector('.item-text')||{}).textContent.trim();if(t&&t!=='Describe here'){var resolved=item.classList.contains('resolved')?1:0;var resolution=(item.querySelector('.item-resolution')||{}).textContent.trim()||'';blockers.push({text:t,resolved:resolved,resolution:resolution});}});var questions=[];if(body)body.querySelectorAll('.question-item').forEach(function(item){var t=(item.querySelector('.item-text')||{}).textContent.trim();if(t&&t!=='Describe here'){var resolved=item.classList.contains('resolved')?1:0;var resolution=(item.querySelector('.item-resolution')||{}).textContent.trim()||'';questions.push({text:t,resolved:resolved,resolution:resolution});}});obj.krs.push({num:num.trim(),title:krTitle,p:parseInt(row.dataset.progress||'0',10),st:row.dataset.status||'on',own:row.dataset.owner||'',date:date,start:start,cur:cur,tgt:tgt,timescale:timescale,brand:brand,proj:projId,inits:inits,blockers:blockers,questions:questions});});var cnt={on:0,at:0,off:0,done:0};obj.krs.forEach(function(kr){if(cnt[kr.st]!==undefined)cnt[kr.st]++;});if(cnt.on)obj.chips.push(['oc-on',cnt.on+' On Track']);if(cnt.at)obj.chips.push(['oc-at',cnt.at+' At Risk']);if(cnt.off)obj.chips.push(['oc-off',cnt.off+' Off Track']);if(cnt.done)obj.chips.push(['oc-done',cnt.done+' Done']);newOkrs.push(obj);});OKRS.length=0;newOkrs.forEach(function(o){OKRS.push(o);});}
+function captureStateFromDOM(){var newOkrs=[];document.querySelectorAll('.obj-card').forEach(function(card){var n=parseInt(card.id.replace('obj-',''),10);var ex=OKRS.filter(function(o){return o.n===n;})[0]||{};var titleEl=card.querySelector('.obj-title');var obj={n:n,pillar:ex.pillar||'P1',badge:ex.badge||'O'+n,bc:ex.bc||'ob1',rc:ex.rc||'#5a0032',title:titleEl?titleEl.textContent.trim():(ex.title||'Objective '+n),owner:ex.owner||'\u2014',due:ex.due||'\u2014',chips:[],krs:[]};card.querySelectorAll('.kr-row').forEach(function(row){var body=row.querySelector('.kr-body');var num=(row.querySelector('.kr-num')||{}).textContent||'';var krTitle='';if(body){var ke=body.querySelector('.ke-text');krTitle=ke?ke.textContent.trim():'';}if(!krTitle){var st2=row.querySelector('.kr-sum-title');krTitle=st2?st2.textContent.trim():'';}var cur='',tgt='',date=row.dataset.due||'',projId='';if(body){var di=body.querySelector('.ke-inp[type=date]');if(di&&!date)date=di.value;var ti=Array.prototype.slice.call(body.querySelectorAll('.ke-inp:not([type=date]):not([type=number]):not(.ke-pct-in)'));var start='';if(ti[0])start=ti[0].value;if(ti[1])tgt=ti[1].value;if(ti[2])cur=ti[2].value;var timescaleSel=body.querySelector('.ke-sel[onchange*="updateKRTimescale"]');var timescale=timescaleSel?timescaleSel.value:'';var ps=body.querySelector('.kr-linked-proj-sel');if(ps)projId=ps.value;}var brand='';if(body){var bsel=body.querySelector('.kr-brand-sel');if(bsel)brand=bsel.value;}var inits=[];/* initiatives are data-model (global INITIATIVES); not scraped from DOM */var blockers=[];if(body)body.querySelectorAll('.blocker-item').forEach(function(item){var t=(item.querySelector('.item-text')||{}).textContent.trim();if(t&&t!=='Describe here'){var resolved=item.classList.contains('resolved')?1:0;var resolution=(item.querySelector('.item-resolution')||{}).textContent.trim()||'';blockers.push({text:t,resolved:resolved,resolution:resolution});}});var questions=[];if(body)body.querySelectorAll('.question-item').forEach(function(item){var t=(item.querySelector('.item-text')||{}).textContent.trim();if(t&&t!=='Describe here'){var resolved=item.classList.contains('resolved')?1:0;var resolution=(item.querySelector('.item-resolution')||{}).textContent.trim()||'';questions.push({text:t,resolved:resolved,resolution:resolution});}});obj.krs.push({num:num.trim(),title:krTitle,p:parseInt(row.dataset.progress||'0',10),st:row.dataset.status||'on',own:row.dataset.owner||'',date:date,start:start,cur:cur,tgt:tgt,timescale:timescale,brand:brand,proj:projId,curUpdated:(row.dataset.curupdated||''),curBy:(row.dataset.curby||''),inits:inits,blockers:blockers,questions:questions});});var cnt={on:0,at:0,off:0,done:0};obj.krs.forEach(function(kr){if(cnt[kr.st]!==undefined)cnt[kr.st]++;});if(cnt.on)obj.chips.push(['oc-on',cnt.on+' On Track']);if(cnt.at)obj.chips.push(['oc-at',cnt.at+' At Risk']);if(cnt.off)obj.chips.push(['oc-off',cnt.off+' Off Track']);if(cnt.done)obj.chips.push(['oc-done',cnt.done+' Done']);newOkrs.push(obj);});OKRS.length=0;newOkrs.forEach(function(o){OKRS.push(o);});}
 window.exportToExcel=function(){var rows=[['Type','Pillar','Objective','KR','Title','Status','Owner','Progress','Due','Current','Target']];OKRS.forEach(function(o){var pl=PILLARS.filter(function(p){return p.id===o.pillar;})[0];o.krs.forEach(function(kr){rows.push(['Key Result',pl?pl.label:'',o.title,kr.num,kr.title,kr.st==='on'?'On Track':kr.st==='at'?'At Risk':kr.st==='off'?'Off Track':'Done',kr.own,kr.p+'%',kr.date,kr.cur,kr.tgt]);initsForKR(kr.num).forEach(function(i){rows.push(['Initiative',pl?pl.label:'',o.title,kr.num,i.t,i.d?'Done':'Open',i.own,'',i.date,'','']);});});});STANDALONE_INITS.forEach(function(i){var pl=PILLARS.filter(function(p){return p.id===i.pillar;})[0];rows.push(['Pillar Initiative',pl?pl.label:'','','',i.t,i.d?'Done':'Open',i.own,'','','','']);});PROJECTS.forEach(function(p){var pl=PILLARS.filter(function(x){return x.id===p.pillar;})[0];rows.push(['Project',pl?pl.label:'','','',p.name,p.status,p.own.join(', '),p.prog+'%',p.due,'','']);(p.projectKrs||[]).forEach(function(kr,i){rows.push(['Project KR',pl?pl.label:'',p.name,'P-KR '+(i+1),kr.title,kr.st==='on'?'On Track':kr.st==='at'?'At Risk':kr.st==='off'?'Off Track':'Done',kr.own,kr.p+'%',kr.date,kr.cur,kr.tgt]);(kr.inits||[]).forEach(function(ii){rows.push(['Project Initiative',pl?pl.label:'',p.name,'P-KR '+(i+1),ii.t,ii.d?'Done':'Open',ii.own,'',ii.date,'','']);});});});BACKLOG.forEach(function(i){var pl=PILLARS.filter(function(p){return p.id===i.pillar;})[0];rows.push(['Backlog',pl?pl.label:'','','',i.title,BL_STATUS_LABELS[i.status]||i.status,i.proposedOwn||'',i.effort||'',(i.submitted||'').split('T')[0],i.rationale||'',i.okrLink||'']);});var csv=rows.map(function(r){return r.map(function(c){var s=String(c||'').replace(/"/g,'""');return s.indexOf(',')>-1||s.indexOf('"')>-1?'"'+s+'"':s;}).join(',');}).join('\n');var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CoHoSt-SPP-'+new Date().toISOString().split('T')[0]+'.csv';a.click();document.getElementById('settings-menu').style.display='none';};
 
 /* ═══ MEETINGS ═══ */
@@ -3696,7 +3682,7 @@ function renderMtgTaskOverview(ownerFilter,tod,brandFilter,heading){
       '<div class="mtg-task-check'+(t.d?' done':'')+'" onclick="toggleMtgTask(\''+x.mid+'\','+x.idx+');renderMeetings()">'+( t.d?'&#x2713;':'')+'</div>'+
       '<div class="mtg-task-body">'+
         '<div class="mtg-task-text'+(t.d?' crossed':'')+'">'+esc(t.t)+'</div>'+
-        '<div class="mtg-task-comment" contenteditable="true" onblur="saveMtgTaskField(this,\''+x.mid+'\','+x.idx+',\'comment\')" data-data-placeholder="Comment or decision...">'+esc(t.comment||'')+'</div>'+
+        '<div class="mtg-task-comment" contenteditable="true" onblur="saveMtgTaskField(this,\''+x.mid+'\','+x.idx+',\'comment\')" data-placeholder="Comment or decision...">'+esc(t.comment||'')+'</div>'+
         '<div class="mtg-task-meta" style="margin-top:2px">'+
           (t.own?'<div class="mtg-task-av av-'+t.own+'" title="'+(OWNERS[t.own]||t.own)+'">'+t.own+'</div>':'<span style="font-size:10px;color:var(--text3)">No owner</span>') +
           '<select class="i-owner-sel" onchange="saveMtgTaskOwner(this,\''+x.mid+'\','+x.idx+')">'+ownerSelFull(t.own||'')+'</select>'+
@@ -3704,6 +3690,7 @@ function renderMtgTaskOverview(ownerFilter,tod,brandFilter,heading){
           '<span style="font-size:9.5px;color:var(--text3)">'+esc(x.mBrand)+' · '+esc(x.mName)+(x.mDate?' · '+fmtDate(x.mDate):'')+'</span>'+
         '</div>'+
       '</div>'+
+      '<button class="mtg-task-del" title="Delete action item" onclick="removeMtgTask(\''+x.mid+'\','+x.idx+')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>'+
     '</div>';
   }
 
@@ -3771,14 +3758,11 @@ window.renderMeetings=function(){
         '<div class="mtg-task-check'+(t.d?' done':'')+'" onclick="toggleMtgTask(\''+m.id+'\','+realIdx+')">'+( t.d?'&#x2713;':'')+'</div>'+
         '<div class="mtg-task-body">'+
           '<div class="mtg-task-text'+(t.d?' crossed':'')+'" contenteditable="true" onblur="saveMtgTaskField(this,\''+m.id+'\','+realIdx+',\'t\')">'+esc(t.t)+'</div>'+
-          '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);margin-top:4px">Comment</div>'+
           '<div class="mtg-task-comment" contenteditable="true" onblur="saveMtgTaskField(this,\''+m.id+'\','+realIdx+',\'comment\')" data-placeholder="Comment or decision...">'+esc(t.comment||'')+'</div>'+
-          '<div class="mtg-task-meta">'+
-            (t.own?'<div class="mtg-task-av av-'+t.own+'" title="'+(OWNERS[t.own]||t.own)+'">'+t.own+'</div>':'<span style="font-size:10px;color:var(--text3)">No owner</span>')+
-            '<select class="i-owner-sel" onchange="saveMtgTaskOwner(this,\''+m.id+'\','+realIdx+')">'+ownerSelFull(t.own||'')+'</select>'+
-            '<input type="date" class="i-date-inp" value="'+esc(t.due||'')+'" onchange="saveMtgTaskDue(this,\''+m.id+'\','+realIdx+')" title="Due date">'+
-            (t.due&&!t.d?'<span class="mtg-task-date'+(od?' overdue':'')+'">'+fmtDate(t.due)+(od?' ⚠':'')+'</span>':'')+
-          '</div>'+
+        '</div>'+
+        '<div class="mtg-task-right">'+
+          '<select class="i-owner-sel" onchange="saveMtgTaskOwner(this,\''+m.id+'\','+realIdx+')">'+ownerSelFull(t.own||'')+'</select>'+
+          '<input type="date" class="i-date-inp'+(od?' overdue':'')+'" value="'+esc(t.due||'')+'" onchange="saveMtgTaskDue(this,\''+m.id+'\','+realIdx+')" title="Due date">'+
         '</div>'+
         '<button class="mtg-task-del" title="Delete action item" onclick="removeMtgTask(\''+m.id+'\','+realIdx+')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>'+
       '</div>';
@@ -3881,7 +3865,10 @@ window.toggleMtgTask=function(id,idx){
 
 window.saveMtgTaskField=function(el,id,idx,field){
   var m=MEETINGS.filter(function(x){return x.id===id;})[0];if(!m||!m.tasks||!m.tasks[idx])return;
-  m.tasks[idx][field]=el.textContent.trim();debouncedSave();
+  m.tasks[idx][field]=el.textContent.trim();
+  renderMeetings();
+  setTimeout(function(){var entry=document.querySelector('.mtg-entry[data-id="'+id+'"]');if(entry)entry.classList.add('open');},20);
+  debouncedSave();
 };
 window.saveMtgTaskOwner=function(sel,id,idx){
   var m=MEETINGS.filter(function(x){return x.id===id;})[0];if(!m||!m.tasks||!m.tasks[idx])return;
@@ -4028,7 +4015,7 @@ window.renderBacklog=function(){
     var effortHtml=item.effort?'<span class="bl-effort">'+esc(item.effort)+'</span>':'<span style="color:var(--text3);font-size:11px">—</span>';
     var sub=item.submitted?(function(){var p=item.submitted.split('T')[0].split('-');var mo=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return p[2]+' '+mo[parseInt(p[1],10)];})():'—';
     var rationale=item.rationale?'<div style="font-size:10.5px;color:var(--text3);margin-top:2px;line-height:1.4">'+esc(item.rationale)+'</div>':'';
-    var okrLink=item.okrLink?'<div style="font-size:10px;color:var(--burg);margin-top:2px">↳ '+esc(item.okrLink)+'</div>':'';
+    var _bkl=blKrList(item);var okrLink=_bkl.length?'<div style="font-size:10px;color:var(--burg);margin-top:2px">\u21b3 '+esc(_bkl.join(', '))+'</div>':'';
     var statusCell=isArchived
       ?'<span class="bl-effort" style="background:var(--donel);color:var(--gra)">Promoted</span>'
       :'<select class="bl-status-sel '+BL_STATUS_CLS[item.status]+'" onchange="updateBacklogStatus(this,\''+item.id+'\')" title="Change status">'+
@@ -4086,15 +4073,16 @@ window.updateBacklogStatus=function(sel,id){
   var newSt=sel.value;
   var item=BACKLOG.filter(function(i){return i.id===id;})[0];
   if(newSt==='approved'&&item){
-    var krNum=item.okrLink;
-    var o=krNum?objForKR(krNum):null;
-    if(!o){
+    var allKr=blKrList(item);
+    var validKr=allKr.filter(function(kn){return !!objForKR(kn);});
+    if(!validKr.length){
       alert('This initiative has no valid Key Result linked, so it can\u2019t be moved automatically.\n\nEdit it and choose a Key Result first.');
       sel.value=item.status;return;
     }
-    if(!confirm('Approve and move \u201c'+item.title+'\u201d to '+krNum+' as an initiative?'))
+    var o=objForKR(validKr[0]);
+    if(!confirm('Approve and move \u201c'+item.title+'\u201d to '+validKr.join(', ')+' as an initiative?'))
       {sel.value=item.status;return;}
-    INITIATIVES.push(normInit({t:item.title,own:item.proposedOwn||'',start:item.start||'',date:item.due||'',krs:[krNum]}));
+    INITIATIVES.push(normInit({t:item.title,own:item.proposedOwn||'',start:item.start||'',date:item.due||'',krs:validKr}));
     item.status='promoted';
     renderBacklog();rebuildAll();debouncedSave();
     switchPageById('view-init-summary');
@@ -4116,16 +4104,8 @@ window.openBacklogModal=function(){
   document.getElementById('bl-char-count').textContent='0';
   var _s=document.getElementById('bl-start');if(_s)_s.value='';
   var _d=document.getElementById('bl-due');if(_d)_d.value='';
-  // populate Key Results dropdown grouped by objective
-  var krSel=document.getElementById('bl-okr-link');
-  var html='';
-  OKRS.forEach(function(o){
-    if(!o.krs||!o.krs.length)return;
-    html+='<optgroup label="'+esc(o.badge+' · '+o.title)+'">';
-    o.krs.forEach(function(kr){html+='<option value="'+esc(kr.num)+'">'+esc(kr.num+' · '+kr.title)+'</option>';});
-    html+='</optgroup>';
-  });
-  krSel.innerHTML=html||'<option value="">— no Key Results yet —</option>';
+  // populate Key Results picker grouped by objective
+  document.getElementById('bl-okr-link-picker').innerHTML=buildKRPicker([]);
   document.getElementById('bl-mv').classList.add('open');
   setTimeout(function(){document.getElementById('bl-title').focus();},100);
 };
@@ -4134,25 +4114,29 @@ document.getElementById('bl-mv').addEventListener('click',function(e){if(e.targe
 document.getElementById('bl-rationale').addEventListener('input',function(){document.getElementById('bl-char-count').textContent=this.value.length;});
 
 function pillarForKR(krNum){var o=objForKR(krNum);return o?o.pillar:'P1';}
+function blKrList(item){if(item&&Array.isArray(item.krLinks))return item.krLinks.slice();if(item&&item.okrLink)return [item.okrLink];return [];}
+function buildKRPicker(checkedArr){checkedArr=checkedArr||[];var html='';OKRS.forEach(function(o){if(!o.krs||!o.krs.length)return;html+='<div class="si-kr-grp">'+esc(o.badge+' \u00b7 '+o.title)+'</div>';o.krs.forEach(function(kr){var on=checkedArr.indexOf(kr.num)>-1;html+='<label class="si-kr-chk"><input type="checkbox" value="'+esc(kr.num)+'"'+(on?' checked':'')+'><span class="kst-num" style="font-size:8px">'+esc(kr.num)+'</span> '+esc(kr.title)+'</label>';});});return html||'<div class="ks-empty">No Key Results yet</div>';}
+function collectKRPicker(pickerId){var out=[];document.querySelectorAll('#'+pickerId+' input[type=checkbox]:checked').forEach(function(c){out.push(c.value);});return out;}
 
 window.saveBacklogItem=function(){
   var title=document.getElementById('bl-title').value.trim();
   var proposedBy=document.getElementById('bl-proposed-by').value;
   var rationale=document.getElementById('bl-rationale').value.trim();
-  var krLink=document.getElementById('bl-okr-link').value;
+  var krLinks=collectKRPicker('bl-okr-link-picker');
   if(!title){document.getElementById('bl-title').focus();return;}
   if(!proposedBy){document.getElementById('bl-proposed-by').focus();return;}
-  if(!krLink){document.getElementById('bl-okr-link').focus();return;}
+  if(!krLinks.length){alert('Please tick at least one Key Result.');return;}
   if(!rationale){document.getElementById('bl-rationale').focus();return;}
   BACKLOG.push({
     id:'bl_'+Date.now(),
     title:title,
     proposedBy:proposedBy,
     proposedOwn:document.getElementById('bl-proposed-own').value,
-    pillar:pillarForKR(krLink),
+    pillar:pillarForKR(krLinks[0]),
     effort:document.getElementById('bl-effort').value,
     rationale:rationale,
-    okrLink:krLink,
+    krLinks:krLinks,
+    okrLink:krLinks[0],
     start:(document.getElementById('bl-start')||{}).value||'',
     due:(document.getElementById('bl-due')||{}).value||'',
     submitted:new Date().toISOString(),
@@ -4326,15 +4310,7 @@ window.openEditBacklogModal=function(id){
   document.getElementById('bl-edit-effort').value=item.effort||'';
   document.getElementById('bl-edit-rationale').value=item.rationale||'';
   document.getElementById('bl-edit-char-count').textContent=(item.rationale||'').length;
-  var okrSel=document.getElementById('bl-edit-okr-link');
-  var ehtml='';
-  OKRS.forEach(function(o){
-    if(!o.krs||!o.krs.length)return;
-    ehtml+='<optgroup label="'+esc(o.badge+' · '+o.title)+'">';
-    o.krs.forEach(function(kr){ehtml+='<option value="'+esc(kr.num)+'"'+(item.okrLink===kr.num?' selected':'')+'>'+esc(kr.num+' · '+kr.title)+'</option>';});
-    ehtml+='</optgroup>';
-  });
-  okrSel.innerHTML=ehtml||'<option value="">— no Key Results yet —</option>';
+  document.getElementById('bl-edit-okr-link-picker').innerHTML=buildKRPicker(blKrList(item));
   document.getElementById('bl-edit-mv').classList.add('open');
   setTimeout(function(){document.getElementById('bl-edit-title').focus();},100);
 };
@@ -4353,7 +4329,9 @@ window.saveEditBacklogItem=function(){
       i.proposedOwn=document.getElementById('bl-edit-proposed-own').value;
       i.effort=document.getElementById('bl-edit-effort').value;
       i.rationale=rationale;
-      i.okrLink=document.getElementById('bl-edit-okr-link').value;
+      var _kl=collectKRPicker('bl-edit-okr-link-picker');
+      i.krLinks=_kl;
+      i.okrLink=_kl[0]||'';
       i.pillar=pillarForKR(i.okrLink);
     }
   });
@@ -4414,7 +4392,7 @@ function applyRemoteState(data){
   STANDALONE_INITS.length=0;(data.standaloneInits||[]).forEach(function(i){STANDALONE_INITS.push(i);});
   INITIATIVES.length=0;(data.initiatives||[]).forEach(function(it){INITIATIVES.push(normInit(it));});mergeKrInitsIntoGlobal();
   OTHER_PROJECTS.length=0;(data.otherProjects||[]).forEach(function(op){if(!op.status)op.status='active';if(!op.own)op.own=op.people||[];if(!op.projectKrs)op.projectKrs=[];if(!op.blockers)op.blockers=[];if(!op.questions)op.questions=[];if(!op.tasks)op.tasks=[];if(!op.files)op.files=[];if(!op.tags)op.tags=[];if(!op.desc)op.desc=op.note||'';if(op.prog===undefined)op.prog=0;OTHER_PROJECTS.push(op);});
-  BACKLOG.length=0;(data.backlog||[]).forEach(function(i){BACKLOG.push(i);});MEETINGS.length=0;(data.meetings||[]).forEach(function(m){if(!m.tasks)m.tasks=[];MEETINGS.push(m);});LINKS.length=0;(data.links||[]).forEach(function(l){LINKS.push(l);});
+  BACKLOG.length=0;(data.backlog||[]).forEach(function(i){if(!Array.isArray(i.krLinks))i.krLinks=i.okrLink?[i.okrLink]:[];if(!i.okrLink&&i.krLinks.length)i.okrLink=i.krLinks[0];BACKLOG.push(i);});MEETINGS.length=0;(data.meetings||[]).forEach(function(m){if(!m.tasks)m.tasks=[];MEETINGS.push(m);});LINKS.length=0;(data.links||[]).forEach(function(l){LINKS.push(l);});
   _remoteLoaded=true;  // safe to save now
   rebuildAll();showSyncStatus('live',data.ts,data.updatedBy);_lastRemoteTs=data.ts||'';isApplyingRemote=false;
 }
@@ -4471,7 +4449,7 @@ showSyncStatus('offline');
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606260001';
+var APP_VERSION='202606300006';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
