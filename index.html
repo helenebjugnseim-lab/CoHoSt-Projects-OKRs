@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300006">
+<meta name="app-version" content="202606300008">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -17,6 +19,13 @@
   --green:#1a7a4a;--greenl:#e2f5ec;--amber:#b45309;--amberl:#fef3c7;
   --redl:#fff0ef;--donel:#f0eaed;
 }
+#login-screen{display:flex;position:fixed;inset:0;background:var(--bg3);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:0}
+.login-card{background:var(--bg);border:.5px solid var(--bord);border-radius:var(--rlg);padding:2.5rem 2rem;width:360px;max-width:92vw;box-shadow:0 8px 40px rgba(90,0,50,.12);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.login-title{font-size:20px;font-weight:700;color:var(--burg)}
+.login-sub{font-size:13px;color:var(--text2);line-height:1.5;margin-top:-8px}
+.login-google-btn{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--bord2);border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;font-family:inherit;transition:all .15s;width:100%;justify-content:center}
+.login-google-btn:hover{border-color:var(--burg);box-shadow:0 2px 8px rgba(90,0,50,.1)}
+.login-error{font-size:12px;color:var(--lake);display:none;line-height:1.4}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh}
 .page{max-width:1360px;margin:0 auto;padding:2rem 1.5rem 4rem}
 /* Header */
@@ -662,7 +671,20 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
 </head>
 <body>
 
-<div class="page">
+<div id="login-screen">
+  <div class="login-card">
+    <svg width="52" height="52" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="18" fill="#ffc0bd"/><polygon points="7,37 40,11 73,37" fill="#fc5e58"/><polygon points="21,37 40,22 59,37" fill="#e04845"/><rect x="11" y="35" width="58" height="38" rx="4" fill="#5a0032"/><rect x="11" y="45" width="58" height="28" fill="#6b0040"/><rect x="16" y="38" width="11" height="9" rx="2.5" fill="#ffc0bd"/><rect x="34.5" y="38" width="11" height="9" rx="2.5" fill="#ffc0bd"/><rect x="53" y="38" width="11" height="9" rx="2.5" fill="#ffc0bd"/><rect x="16" y="52" width="11" height="9" rx="2.5" fill="#ffc0bd"/><rect x="53" y="52" width="11" height="9" rx="2.5" fill="#ffc0bd"/><rect x="33" y="53" width="14" height="20" rx="7" fill="#ffc0bd"/><path d="M40,29C40,29 33.5,22.5 33.5,18.5C33.5,15.8 35.5,14.3 37.3,15C38.4,15.4 39.3,16.4 40,17.6C40.7,16.4 41.6,15.4 42.7,15C44.5,14.3 46.5,15.8 46.5,18.5C46.5,22.5 40,29 40,29Z" fill="#ff7df0"/></svg>
+    <div class="login-title">CoHoSt SPP Projects &amp; OKRs</div>
+    <div class="login-sub">Sign in with your Strawberry Google account to access the dashboard.</div>
+    <button class="login-google-btn" onclick="signInWithGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.84 2.09-1.8 2.73v2.27h2.91c1.7-1.57 2.69-3.88 2.69-6.64z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.81 5.96-2.18l-2.91-2.27c-.81.54-1.84.86-3.05.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.34C2.44 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.95 10.71c-.18-.54-.29-1.11-.29-1.71s.11-1.17.29-1.71V4.95H.96A8.996 8.996 0 0 0 0 9c0 1.45.35 2.82.96 4.05l2.99-2.34z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.95l2.99 2.34C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+      Sign in with Google
+    </button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<div class="page" id="app-root" style="display:none">
 
 <!-- Version update: sticky banner (appears instantly) -->
 <div id="version-banner" style="display:none;position:sticky;top:0;z-index:9998;background:#b45309;color:#fff;padding:10px 16px;border-radius:var(--r);margin-bottom:12px;font-size:13px;font-weight:600;display:none;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.2)">
@@ -703,6 +725,7 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
         Settings
       </button>
       <div id="settings-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--bg);border:.5px solid var(--bord2);border-radius:var(--r);box-shadow:0 4px 16px rgba(90,0,50,.12);min-width:180px;z-index:100;overflow:hidden">
+        <div style="padding:8px 14px;font-size:11px;color:var(--text3);border-bottom:.5px solid var(--bord)">Signed in as<br><strong id="auth-user-name" style="color:var(--text2)"></strong></div>
         <div style="padding:6px 0">
           <button onclick="exportToExcel()" style="display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:8px 14px;font-size:12px;color:var(--text);cursor:pointer;font-family:inherit;text-align:left">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -715,6 +738,10 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
           <button onclick="importWorkspace()" style="display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:8px 14px;font-size:12px;color:var(--text);cursor:pointer;font-family:inherit;text-align:left">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             Import (JSON)
+          </button>
+          <button onclick="signOutUser()" style="display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:8px 14px;font-size:12px;color:var(--lake);cursor:pointer;font-family:inherit;text-align:left;border-top:.5px solid var(--bord)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Sign out
           </button>
         </div>
       </div>
@@ -1671,8 +1698,8 @@ window.goToKRFromProject=function(krNum){
 /* OKR Rendering */
 function parseMetric(v){if(v===undefined||v===null)return null;var t=String(v).replace(/,/g,'').trim();if(!t)return null;var m=t.match(/-?\d+(\.\d+)?/);if(!m)return null;var n=parseFloat(m[0]);return isFinite(n)?n:null;}
 function computeKRProgress(start,cur,tgt){var a=parseMetric(start),c=parseMetric(cur),b=parseMetric(tgt);if(a===null||c===null||b===null)return null;if(b-a===0)return null;return Math.round((c-a)/(b-a)*100);}
-function curStampText(kr){if(!kr||!kr.curUpdated)return 'Current not yet updated';var d=new Date(kr.curUpdated);if(isNaN(d.getTime()))return 'Current not yet updated';var ds=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});var by=(kr.curBy&&OWNERS[kr.curBy])?(' by '+OWNERS[kr.curBy]):'';return 'Current updated '+ds+by;}
-window.updateKRCurrent=function(el){var row=el.closest('.kr-row');if(!row){recomputeKR(el);return;}var prev=el.getAttribute('data-prevcur')||'';var now=el.value;if(now!==prev){var iso=new Date().toISOString();row.dataset.curupdated=iso;row.dataset.curby=currentUser||'';el.setAttribute('data-prevcur',now);var stamp=el.parentElement.querySelector('.kr-cur-stamp');if(stamp){var d=new Date(iso);var by=(currentUser&&OWNERS[currentUser])?(' by '+OWNERS[currentUser]):'';stamp.textContent='Current updated '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+by;}}recomputeKR(el);};
+function curStampText(kr){if(!kr||!kr.curUpdated)return 'Not yet updated';var d=new Date(kr.curUpdated);if(isNaN(d.getTime()))return 'Not yet updated';var ds=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});var by=(kr.curBy&&OWNERS[kr.curBy])?(' by '+kr.curBy):'';return 'Updated '+ds+by;}
+window.updateKRCurrent=function(el){var row=el.closest('.kr-row');if(!row){recomputeKR(el);return;}var prev=el.getAttribute('data-prevcur')||'';var now=el.value;if(now!==prev){var iso=new Date().toISOString();row.dataset.curupdated=iso;row.dataset.curby=currentUser||'';el.setAttribute('data-prevcur',now);var stamp=el.parentElement.querySelector('.kr-cur-stamp');if(stamp){var d=new Date(iso);var by=(currentUser&&OWNERS[currentUser])?(' by '+currentUser):'';stamp.textContent='Updated '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+by;}}recomputeKR(el);};
 window.recomputeKR=function(el){var row=el.closest('.kr-row');if(!row)return;var body=row.querySelector('.kr-body');if(!body)return;var ti=Array.prototype.slice.call(body.querySelectorAll('.ke-inp:not([type=date]):not([type=number]):not(.ke-pct-in)'));var start=ti[0]?ti[0].value:'',tgt=ti[1]?ti[1].value:'',cur=ti[2]?ti[2].value:'';var comp=computeKRProgress(start,cur,tgt);var pv=comp===null?0:comp;var bw=Math.max(0,Math.min(100,pv));row.dataset.progress=pv;if(comp===null)row.dataset.nopct='1';else row.removeAttribute('data-nopct');var lbl=row.querySelector('.kr-computed-pct');if(lbl){lbl.textContent=comp===null?'\u2014':comp+'%';lbl.classList.toggle('nopct',comp===null);}var bodyFill=body.querySelector('.kr-body-fill');if(bodyFill)bodyFill.style.width=bw+'%';var miniFill=row.querySelector('.kr-sum .kr-mini-fill');if(miniFill)miniFill.style.width=bw+'%';var sp=row.querySelector('.kr-sum-pct');if(sp)sp.textContent=comp===null?'\u2014':comp+'%';recalcObj(row.closest('.obj-card'));debouncedSave();};
 function genId(p){return (p||'in')+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);}
 function normInit(it){it=it||{};it.id=it.id||genId('in');it.t=it.t||'';it.own=it.own||'';it.start=it.start||'';it.date=it.date||'';it.d=it.d?1:0;if(!Array.isArray(it.krs))it.krs=[];if(!Array.isArray(it.links)){it.links=[];if(it.link)it.links.push({id:genId('ln'),url:it.link});}it.links.forEach(function(l){l.id=l.id||genId('ln');l.url=l.url||'';});if(!Array.isArray(it.milestones))it.milestones=[];if(!Array.isArray(it.blockers))it.blockers=[];if(!Array.isArray(it.questions))it.questions=[];it.milestones.forEach(function(m){m.id=m.id||genId('ms');m.t=m.t||'';m.own=m.own||'';m.due=m.due||'';m.st=m.st||'on';});function nb(x){return {text:(x&&x.text)||'',resolved:(x&&x.resolved)?1:0,resolution:(x&&x.resolution)||'',ms:(x&&x.ms)||''};}it.blockers=it.blockers.map(nb);it.questions=it.questions.map(nb);return it;}
@@ -4356,6 +4383,55 @@ window.toggleArchivedBacklog=function(btn){
 window.exportWorkspace=function(){captureStateFromDOM();var state={v:5,ts:new Date().toISOString(),okrs:OKRS,projects:PROJECTS,standaloneInits:STANDALONE_INITS,initiatives:INITIATIVES,backlog:BACKLOG,meetings:MEETINGS};var blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cohost-spp-'+new Date().toISOString().split('T')[0]+'.json';a.click();document.getElementById('settings-menu').style.display='none';try{localStorage.setItem('spp_last_backup',new Date().toISOString());updateBackupBadge();}catch(e){}};
 window.importWorkspace=function(){var inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=function(e){var file=e.target.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(ev){try{var state=JSON.parse(ev.target.result);if(!state.okrs){alert('Invalid file.');return;}applyRemoteState(state);saveWorkspace(false);}catch(err){alert('Could not read: '+err.message);}};reader.readAsText(file);};inp.click();};
 
+/* ===== AUTH — Firebase Google Sign-In + email whitelist ===== */
+var AUTH_WHITELIST={
+  'anna.eklund@strawberry.no':'AN',
+  'christopher.strom@strawberry.no':'CH',
+  'eirik.bogsnes@strawberry.no':'EI',
+  'helene.bjugn.seim@strawberry.no':'HE',
+  'ingrid.tegtmeier@strawberry.no':'IN',
+  'jannica.niklasson@strawberry.no':'JA',
+  'richard.svartvik@strawberry.no':'RI',
+  'sam.radstake.nissen@strawberry.no':'SA',
+  'solveig.voldheim@strawberry.no':'SO',
+  'ane.christensen@strawberry.no':'AE',
+  'camilla.brautaset@strawberry.no':'CA',
+  'daniel.karlsson2@strawberry.se':'DA',
+  'david.horal@strawberry.se':null
+};
+firebase.initializeApp({apiKey:'AIzaSyC_9659aLhM2L6PvV5Kv6W6L0qKNcR1A7I',authDomain:'cohost-bpm-workspace.firebaseapp.com',projectId:'cohost-bpm-workspace'});
+var fbAuth=firebase.auth();
+
+window.signInWithGoogle=function(){
+  var errEl=document.getElementById('login-error');if(errEl)errEl.style.display='none';
+  fbAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(err){
+    if(errEl){errEl.textContent='Sign-in failed: '+err.message;errEl.style.display='block';}
+  });
+};
+window.signOutUser=function(){
+  fbAuth.signOut().then(function(){localStorage.removeItem('spp_user');window.location.reload();});
+};
+
+fbAuth.onAuthStateChanged(function(user){
+  var ls=document.getElementById('login-screen'),errEl=document.getElementById('login-error');
+  if(user){
+    var email=(user.email||'').toLowerCase();
+    if(Object.prototype.hasOwnProperty.call(AUTH_WHITELIST,email)){
+      var initials=AUTH_WHITELIST[email];
+      if(initials){currentUser=initials;try{localStorage.setItem('spp_user',initials);}catch(e){}}
+      var nameEl=document.getElementById('auth-user-name');if(nameEl)nameEl.textContent=user.displayName||email;
+      if(ls)ls.style.display='none';
+      if(typeof window.startApp==='function')window.startApp();
+    } else {
+      if(errEl){errEl.textContent='This Google account ('+email+') is not authorized for this dashboard. Contact Helene if this is a mistake.';errEl.style.display='block';}
+      fbAuth.signOut();
+      if(ls)ls.style.display='flex';
+    }
+  } else {
+    if(ls)ls.style.display='flex';
+  }
+});
+
 window.toggleSettingsMenu=function(){var menu=document.getElementById('settings-menu');if(!menu)return;var open=menu.style.display!=='none';menu.style.display=open?'none':'block';if(!open){setTimeout(function(){document.addEventListener('click',function c(e){if(!document.getElementById('settings-btn').contains(e.target)){menu.style.display='none';document.removeEventListener('click',c);}});},0);}};
 /* FIREBASE PERSISTENCE — Realtime Database REST API (works from file://) */
 var OWNERS_MAP={AE:'Ane',AN:'Anna',CA:'Camilla',CH:'Christopher',DA:'Daniel',EI:'Eirik',HE:'Helene',IN:'Ingrid',JA:'Jannica',RI:'Richard',SA:'Sam',SO:'Solveig'};
@@ -4418,38 +4494,55 @@ window.debouncedSave=function(){
   _pendingSave=true;showSyncStatus('saving');clearTimeout(saveTimer);showSaveToast();saveTimer=setTimeout(function(){saveWorkspace();},2000);
 };
 
+function isUserEditing(){
+  var a=document.activeElement;
+  if(!a||a===document.body)return false;
+  var tag=a.tagName;
+  if(tag==='INPUT'||tag==='SELECT'||tag==='TEXTAREA')return true;
+  if(a.isContentEditable)return true;
+  return false;
+}
 function pollRemote(){
   if(isSaving||_pendingSave)return;
   fetchRemote(function(data,err){
     if(err||!data)return;
-    if(data.ts&&data.ts!==_lastRemoteTs)applyRemoteState(data);
+    if(isSaving||_pendingSave)return; // re-check: a save may have started while this request was in flight
+    if(data.ts&&data.ts!==_lastRemoteTs){
+      if(isUserEditing())return; // defer — don't rebuild under an active edit, retry next poll
+      applyRemoteState(data);
+    }
     else if(data.ts)showSyncStatus('live',data.ts,data.updatedBy);
   });
 }
 
-showSyncStatus('offline');
-(function initLoad(attempt){
-  fetchRemote(function(data,err){
-    if(data){
-      try{applyRemoteState(data);}catch(e){console.error('applyRemoteState crashed:',e.message,e.stack);}
-      if(!_pollTimer)_pollTimer=setInterval(pollRemote,5000);
-    } else if(!err){
-      var dot=document.getElementById('sync-dot'),el=document.getElementById('sync-status');
-      if(dot)dot.style.background='#22c55e';
-      if(el){el.textContent='\u25cf Ready \u2014 make an edit to sync';el.style.color='#22c55e';}
-      if(!_pollTimer)_pollTimer=setInterval(pollRemote,5000);
-    } else {
-      // Retry with backoff: 3s, 6s, 12s, 24s, then every 30s
-      var delay=Math.min(3000*Math.pow(2,attempt),30000);
-      showSyncStatus('offline');
-      setTimeout(function(){initLoad(attempt+1);},delay);
-    }
-  });
-})(0);
+var _appStarted=false;
+window.startApp=function(){
+  if(_appStarted)return;_appStarted=true; // guard: auth state can fire more than once
+  var root=document.getElementById('app-root');if(root)root.style.display='block';
+  showSyncStatus('offline');
+  (function initLoad(attempt){
+    fetchRemote(function(data,err){
+      if(data){
+        try{applyRemoteState(data);}catch(e){console.error('applyRemoteState crashed:',e.message,e.stack);}
+        if(!_pollTimer)_pollTimer=setInterval(pollRemote,5000);
+      } else if(!err){
+        var dot=document.getElementById('sync-dot'),el=document.getElementById('sync-status');
+        if(dot)dot.style.background='#22c55e';
+        if(el){el.textContent='\u25cf Ready \u2014 make an edit to sync';el.style.color='#22c55e';}
+        if(!_pollTimer)_pollTimer=setInterval(pollRemote,5000);
+      } else {
+        // Retry with backoff: 3s, 6s, 12s, 24s, then every 30s
+        var delay=Math.min(3000*Math.pow(2,attempt),30000);
+        showSyncStatus('offline');
+        setTimeout(function(){initLoad(attempt+1);},delay);
+      }
+    });
+  })(0);
+};
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300006';
+var APP_VERSION='202606300008';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
