@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300009">
+<meta name="app-version" content="202606300010">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -2666,7 +2666,7 @@ function applyKRFilters(){
 window.toggleObjKRs=function(card){var open=card.classList.toggle('krs-open');var btn=card.querySelector('.obj-kr-toggle');var hint=btn&&btn.querySelector('span:last-child');if(hint)hint.textContent=open?'Click to collapse':'Click to expand';};
 window.toggleKR=function(row){row.classList.toggle('open');};
 window.expandAll=function(btn){var card=btn.closest('.obj-card'),rows=card.querySelectorAll('.kr-row');var anyOpen=Array.from(rows).some(function(r){return r.classList.contains('open');});rows.forEach(function(r){r.classList.toggle('open',!anyOpen);});btn.textContent=anyOpen?'Expand all':'Collapse all';};
-window.syncTitle=function(el){var row=el.closest('.kr-row');if(!row)return;var t=row.querySelector('.kr-sum-title');if(t)t.textContent=el.textContent.trim();};
+window.syncTitle=function(el){var row=el.closest('.kr-row');if(!row)return;var t=row.querySelector('.kr-sum-title');if(t)t.textContent=el.textContent.trim();debouncedSave();};
 window.syncObjTitle=function(el){
   var card=el.closest('.obj-card');if(!card)return;
   var n=parseInt(card.id.replace('obj-',''),10);
@@ -4437,11 +4437,12 @@ window.toggleSettingsMenu=function(){var menu=document.getElementById('settings-
 var OWNERS_MAP={AE:'Ane',AN:'Anna',CA:'Camilla',CH:'Christopher',DA:'Daniel',EI:'Eirik',HE:'Helene',IN:'Ingrid',JA:'Jannica',RI:'Richard',SA:'Sam',SO:'Solveig'};
 var currentUser=localStorage.getItem('spp_user')||'';
 var saveTimer=null,isSaving=false,isApplyingRemote=false,_pollTimer=null,_lastRemoteTs='',_pendingSave=false;
+var _retryTimer=null,_retryAttempt=0;
 var _remoteLoaded=false;
 var _newVersionAvailable=false; // GUARD: never save until Firebase has loaded at least once
 var FB_URL='https://cohost-bpm-workspace-default-rtdb.firebaseio.com/spp_workspace.json';
 
-function showSyncStatus(s,ts,by){var dot=document.getElementById('sync-dot'),el=document.getElementById('sync-status'),tsEl=document.getElementById('sync-ts');if(!el)return;if(s==='live'){el.textContent='\u25cf Live';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='saving'){el.textContent='\u25cf Saving\u2026';el.style.color='#f59e0b';if(dot)dot.style.background='#f59e0b';}if(s==='saved'){el.textContent='\u2713 Saved';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='error'){el.textContent='\u26a0 Sync error';el.style.color='var(--lake)';if(dot)dot.style.background='var(--lake)';}if(s==='offline'){el.textContent='\u25cb Connecting\u2026';el.style.color='var(--gra)';if(dot)dot.style.background='var(--gra)';}if(tsEl){var parts=[];if(ts){var d=new Date(ts);parts.push('\u00b7 '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));}if(by&&OWNERS_MAP[by])parts.push('by '+OWNERS_MAP[by]);tsEl.textContent=parts.join(' ');}}
+function showSyncStatus(s,ts,by){var dot=document.getElementById('sync-dot'),el=document.getElementById('sync-status'),tsEl=document.getElementById('sync-ts');if(!el)return;if(s==='live'){el.textContent='\u25cf Live';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='saving'){el.textContent='\u25cf Saving\u2026';el.style.color='#f59e0b';if(dot)dot.style.background='#f59e0b';}if(s==='saved'){el.textContent='\u2713 Saved';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='error'){el.textContent='\u26a0 Sync error';el.style.color='var(--lake)';if(dot)dot.style.background='var(--lake)';}if(s==='retrying'){el.textContent='\u26a0 Connection lost \u2014 your edit is safe, retrying\u2026';el.style.color='var(--lake)';if(dot)dot.style.background='var(--lake)';}if(s==='offline'){el.textContent='\u25cb Connecting\u2026';el.style.color='var(--gra)';if(dot)dot.style.background='var(--gra)';}if(tsEl){var parts=[];if(ts){var d=new Date(ts);parts.push('\u00b7 '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));}if(by&&OWNERS_MAP[by])parts.push('by '+OWNERS_MAP[by]);tsEl.textContent=parts.join(' ');}}
 
 function getAuthToken(cb){
   if(fbAuth&&fbAuth.currentUser){
@@ -4489,7 +4490,7 @@ function applyRemoteState(data){
 
 window.saveWorkspace=function(){
   if(!_remoteLoaded){console.warn('Save blocked: remote not loaded yet');return;}
-  clearTimeout(saveTimer);
+  clearTimeout(saveTimer);clearTimeout(_retryTimer);
   var _beforeOKRS=OKRS.length, _beforeProj=PROJECTS.length, _beforeOP=OTHER_PROJECTS.length;
   captureStateFromDOM();
   // Safety guard: if any array that had data came back empty, abort and restore
@@ -4500,13 +4501,30 @@ window.saveWorkspace=function(){
     return;
   }
   var state={v:5,ts:new Date().toISOString(),updatedBy:currentUser||'',okrs:JSON.parse(JSON.stringify(OKRS)),projects:JSON.parse(JSON.stringify(PROJECTS)),standaloneInits:JSON.parse(JSON.stringify(STANDALONE_INITS)),initiatives:JSON.parse(JSON.stringify(INITIATIVES)),otherProjects:JSON.parse(JSON.stringify(OTHER_PROJECTS)),backlog:JSON.parse(JSON.stringify(BACKLOG)),meetings:JSON.parse(JSON.stringify(MEETINGS)),links:JSON.parse(JSON.stringify(LINKS))};
-  showSyncStatus('saving');isSaving=true;
-  writeRemote(state,function(err){isSaving=false;_pendingSave=false;if(err){showSyncStatus('error');}else{_lastRemoteTs=state.ts;showSyncStatus('saved',state.ts,state.updatedBy);setTimeout(function(){showSyncStatus('live',state.ts,state.updatedBy);},2500);}});
+  showSyncStatus('saving');isSaving=true;_pendingSave=true;
+  writeRemote(state,function(err){
+    isSaving=false;
+    if(err){
+      // Keep _pendingSave=true: blocks the background poll from overwriting the screen
+      // with stale data until this edit has actually made it to Firebase. Retry with backoff.
+      _retryAttempt++;
+      var delay=Math.min(3000*Math.pow(2,_retryAttempt-1),30000);
+      showSyncStatus('retrying');
+      _retryTimer=setTimeout(function(){saveWorkspace();},delay);
+    } else {
+      _pendingSave=false;_retryAttempt=0;
+      _lastRemoteTs=state.ts;
+      showSaveToast(); // confirm "saved" only once it has actually persisted
+      showSyncStatus('saved',state.ts,state.updatedBy);
+      setTimeout(function(){showSyncStatus('live',state.ts,state.updatedBy);},2500);
+    }
+  });
 };
 window.debouncedSave=function(){
   if(!_remoteLoaded||_newVersionAvailable)return;  // never queue a save before remote data is loaded
-  _pendingSave=true;showSyncStatus('saving');clearTimeout(saveTimer);showSaveToast();saveTimer=setTimeout(function(){saveWorkspace();},2000);
+  _pendingSave=true;showSyncStatus('saving');clearTimeout(saveTimer);clearTimeout(_retryTimer);_retryAttempt=0;saveTimer=setTimeout(function(){saveWorkspace();},2000);
 };
+
 
 function isUserEditing(){
   var a=document.activeElement;
@@ -4556,7 +4574,7 @@ window.startApp=function(){
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300009';
+var APP_VERSION='202606300010';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
