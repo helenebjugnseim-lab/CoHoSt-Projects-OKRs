@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300008">
+<meta name="app-version" content="202606300009">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -4443,23 +4443,37 @@ var FB_URL='https://cohost-bpm-workspace-default-rtdb.firebaseio.com/spp_workspa
 
 function showSyncStatus(s,ts,by){var dot=document.getElementById('sync-dot'),el=document.getElementById('sync-status'),tsEl=document.getElementById('sync-ts');if(!el)return;if(s==='live'){el.textContent='\u25cf Live';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='saving'){el.textContent='\u25cf Saving\u2026';el.style.color='#f59e0b';if(dot)dot.style.background='#f59e0b';}if(s==='saved'){el.textContent='\u2713 Saved';el.style.color='#22c55e';if(dot)dot.style.background='#22c55e';}if(s==='error'){el.textContent='\u26a0 Sync error';el.style.color='var(--lake)';if(dot)dot.style.background='var(--lake)';}if(s==='offline'){el.textContent='\u25cb Connecting\u2026';el.style.color='var(--gra)';if(dot)dot.style.background='var(--gra)';}if(tsEl){var parts=[];if(ts){var d=new Date(ts);parts.push('\u00b7 '+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));}if(by&&OWNERS_MAP[by])parts.push('by '+OWNERS_MAP[by]);tsEl.textContent=parts.join(' ');}}
 
+function getAuthToken(cb){
+  if(fbAuth&&fbAuth.currentUser){
+    fbAuth.currentUser.getIdToken().then(function(token){cb(token);}).catch(function(){cb(null);});
+  } else {
+    cb(null);
+  }
+}
+function withAuthUrl(token){return token?(FB_URL+'?auth='+encodeURIComponent(token)):FB_URL;}
+
 function fetchRemote(cb){
-  fetch(FB_URL).then(function(r){
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return r.json();
-  }).then(function(data){
-    cb(data);
-  }).catch(function(err){cb(null,'error');});  // suppress console spam
+  getAuthToken(function(token){
+    fetch(withAuthUrl(token)).then(function(r){
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return r.json();
+    }).then(function(data){
+      cb(data);
+    }).catch(function(err){cb(null,'error');});  // suppress console spam
+  });
 }
 
 function writeRemote(state,cb){
-  fetch(FB_URL,{
-    method:'PUT',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(state)
-  }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);if(cb)cb(null);})
-  .catch(function(err){console.error('Sync write:',err);if(cb)cb(err);});
+  getAuthToken(function(token){
+    fetch(withAuthUrl(token),{
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(state)
+    }).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);if(cb)cb(null);})
+    .catch(function(err){console.error('Sync write:',err);if(cb)cb(err);});
+  });
 }
+
 
 function applyRemoteState(data){
   if(!data||!data.okrs)return;isApplyingRemote=true;
@@ -4542,7 +4556,7 @@ window.startApp=function(){
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300008';
+var APP_VERSION='202606300009';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
