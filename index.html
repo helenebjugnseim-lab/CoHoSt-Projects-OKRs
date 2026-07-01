@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300015">
+<meta name="app-version" content="202607010001">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -56,7 +56,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .av-RI{background:#e8e5e6;color:#5a0032}.av-SA{background:#e8e5e6;color:#5a0032}
 .av-SO{background:#e8e5e6;color:#5a0032}
 .av-AE{background:#e8e5e6;color:#5a0032}.av-CA{background:#e8e5e6;color:#5a0032}.av-DA{background:#e8e5e6;color:#5a0032}.av-DH{background:#e8e5e6;color:#5a0032}
-/* Metrics */
+/* Brand filter pills */
+.brand-filter-bar{display:flex;gap:5px;align-items:center;margin-bottom:1.4rem;flex-wrap:wrap}
+.brand-filter-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-right:2px}
+.brand-pill{font-size:11px;font-weight:600;padding:4px 14px;border-radius:99px;border:.5px solid var(--bord2);cursor:pointer;background:var(--bg);color:var(--text2);font-family:inherit;transition:all .15s;user-select:none}
+.brand-pill:hover{border-color:var(--burg);color:var(--burg)}
+.brand-pill.active{background:var(--burg);color:#fff;border-color:var(--burg)}
+.brand-pill.bp-comfort.active{background:#1a7a4a;border-color:#1a7a4a}
+.brand-pill.bp-home.active{background:#1a4a8b;border-color:#1a4a8b}
+.brand-pill.bp-stopover.active{background:#b45309;border-color:#b45309}
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.4rem}
 .metric{background:var(--burg);border-radius:var(--r);padding:.9rem 1rem;cursor:pointer;transition:opacity .15s}
 .metric:hover{opacity:.88}
@@ -786,6 +794,14 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
   <div class="av-chip" data-k="RI" onclick="filterOwner('RI')"><div class="av av-RI">RI</div><span>Richard</span></div>
   <div class="av-chip" data-k="SA" onclick="filterOwner('SA')"><div class="av av-SA">SA</div><span>Sam</span></div>
   <div class="av-chip" data-k="SO" onclick="filterOwner('SO')"><div class="av av-SO">SO</div><span>Solveig</span></div>
+</div>
+<!-- Brand filter bar -->
+<div class="brand-filter-bar">
+  <span class="brand-filter-lbl">Brand</span>
+  <button class="brand-pill active" data-brand="all" onclick="filterBrand(this,'all')">All brands</button>
+  <button class="brand-pill bp-comfort" data-brand="Comfort" onclick="filterBrand(this,'Comfort')">Comfort</button>
+  <button class="brand-pill bp-home" data-brand="Home" onclick="filterBrand(this,'Home')">Home</button>
+  <button class="brand-pill bp-stopover" data-brand="StopOver" onclick="filterBrand(this,'StopOver')">StopOver</button>
 </div>
 <!-- Metrics -->
 <div class="metrics">
@@ -1672,6 +1688,7 @@ function countProjLinkedKRs(p){return (p.krs||[]).length+(p.projectKrs||[]).leng
 function countProjLinkedInits(p){var count=0;(p.krs||[]).forEach(function(krNum){count+=initsForKR(krNum).length;});return count;}
 var SL={on:'On Track',at:'At Risk',off:'Off Track',done:'Done'};
 var activeOwner=null,targetObj=null,activeProjFilter='all',krSmryFilter='all',initSmryFilter='all',activeQuarter='all',krPillarFilter='all',initPillarFilter='all',activeOKRPillar='all',krSourceFilter='all',initSourceFilter='all';
+var activeBrand='all'; // global brand filter: 'all' | 'Comfort' | 'Home' | 'StopOver'
 
 /* page switching */
 window.switchPage=function(btn,viewId){
@@ -1946,7 +1963,7 @@ function krHTML(kr){
     indicators += '<span class="kr-indicator has-questions" title="' + unresolvedQuestions + ' unresolved question' + (unresolvedQuestions > 1 ? 's' : '') + '">' + unresolvedQuestions + ' ❓</span>';
   }
   
-  return '<div class="kr-row" data-owner="'+kr.own+'" data-progress="'+_krPV+'"'+(_krComp===null?' data-nopct="1"':'')+' data-status="'+kr.st+'" data-due="'+esc(kr.date||'')+'" data-krnum="'+esc(kr.num)+'" data-curupdated="'+esc(kr.curUpdated||'')+'" data-curby="'+esc(kr.curBy||'')+'">'+
+  return '<div class="kr-row" data-owner="'+kr.own+'" data-progress="'+_krPV+'"'+(_krComp===null?' data-nopct="1"':'')+' data-status="'+kr.st+'" data-due="'+esc(kr.date||'')+'" data-krnum="'+esc(kr.num)+'" data-brand="'+esc(kr.brand||'')+'" data-curupdated="'+esc(kr.curUpdated||'')+'" data-curby="'+esc(kr.curBy||'')+'">'+
     '<div class="kr-sum" onclick="toggleKR(this.parentElement)">'+
       '<span class="kr-num">'+esc(kr.num)+'</span>'+
       '<span class="kr-sum-title">'+esc(kr.title)+'</span>'+
@@ -2364,6 +2381,7 @@ function renderKRSummary(){
     o.krs.forEach(function(kr){
       if(krSmryFilter!=='all'&&kr.st!==krSmryFilter)return;
       if(activeOwner&&kr.own!==activeOwner)return;
+      if(activeBrand!=='all'&&kr.brand!==activeBrand)return;
       if(krPillarFilter!=='all'&&o.pillar!==krPillarFilter)return;
       var initCount=initsForKR(kr.num).length;
       var tr=document.createElement('tr');tr.dataset.status=kr.st;
@@ -2466,6 +2484,7 @@ function renderInitSummary(){
     if(initDueCutoff){if(!i.date)return false;if(i.date>initDueCutoff)return false;}
     if(initObjFilter!=='all'){var okObj=(i.krs||[]).some(function(kn){return krObj[kn]&&krObj[kn].n===initObjFilter;});if(!okObj)return false;}
     if(initPillarFilter!=='all'){var okPil=(i.krs||[]).some(function(kn){return krObj[kn]&&krObj[kn].pillar===initPillarFilter;});if(!okPil)return false;}
+    if(activeBrand!=='all'){var okBrand=(i.krs||[]).some(function(kn){var allKr=null;OKRS.forEach(function(o){(o.krs||[]).forEach(function(kr){if(kr.num===kn)allKr=kr;});});return allKr&&allKr.brand===activeBrand;});if(!okBrand)return false;}
     return true;
   }
   var list=sortInits(INITIATIVES.filter(passes));
@@ -2618,7 +2637,7 @@ window.openOKRDetail=function(objN){
   var pBgs={ob1:'#fce4f0',ob2:'#d6f5e8',ob3:'#d8e8ff',ob4:'#ede0ff',ob5:'#ffefd6'};
   var pBg=pBgs[o.bc]||'#f0eaed';
 
-  var krsHtml=o.krs.map(function(kr){return krHTML(kr);}).join('');
+  var krsHtml=o.krs.filter(function(kr){return activeBrand==='all'||kr.brand===activeBrand;}).map(function(kr){return krHTML(kr);}).join('');
 
   var content=document.getElementById('okr-detail-content');
   content.innerHTML=
@@ -2760,6 +2779,7 @@ function applyKRFilters(){
   document.querySelectorAll('.kr-row').forEach(function(r){
     var show=true;
     if(activeOwner&&r.dataset.owner!==activeOwner)show=false;
+    if(activeBrand!=='all'&&r.dataset.brand!==activeBrand)show=false;
     if(activeQuarter&&activeQuarter!=='all'){var due=r.dataset.due;if(due){var month=parseInt(due.split('-')[1],10);var range=qMap[activeQuarter];if(!range||month<range[0]||month>range[1])show=false;}else{show=false;}}
     r.classList.toggle('kr-row-hidden',!show);
   });
@@ -2798,7 +2818,9 @@ window.updateKRTimescale=function(sel){
 window.updateKRBrand=function(sel){
   var row=sel.closest('.kr-row');if(!row)return;
   var krNum=row.dataset.krnum;var val=sel.value;
+  row.dataset.brand=val;
   OKRS.forEach(function(o){o.krs.forEach(function(kr){if(kr.num===krNum)kr.brand=val;});});
+  if(activeBrand!=='all')row.classList.toggle('kr-row-hidden',val!==activeBrand);
   debouncedSave();
 };
 window.updateOwner=function(sel){var row=sel.closest('.kr-row');if(!row)return;var o=sel.value;row.dataset.owner=o;var av=row.querySelector('.kr-sum-av');if(av){av.className='kr-sum-av av-'+o;av.textContent=o;}if(activeOwner)row.classList.toggle('kr-row-hidden',o!==activeOwner);debouncedSave();};
@@ -2817,12 +2839,22 @@ function updateMetrics(){
   OKRS.forEach(function(obj) {
     obj.krs.forEach(function(kr) {
       if (!activeOwner || kr.own === activeOwner) {
-        visibleKRs.push(kr);
-        statusCount[kr.st]++;
+        if(activeBrand==='all'||kr.brand===activeBrand){
+          visibleKRs.push(kr);
+          statusCount[kr.st]++;
+        }
       }
     });
   });
-  INITIATIVES.forEach(function(i){if(!i.d&&(!activeOwner||i.own===activeOwner))totalInitiatives++;});
+  INITIATIVES.forEach(function(i){
+    if(i.d)return;
+    if(activeOwner&&i.own!==activeOwner)return;
+    if(activeBrand!=='all'){
+      var hasBrand=(i.krs||[]).some(function(kn){var found=false;OKRS.forEach(function(o){(o.krs||[]).forEach(function(kr){if(kr.num===kn&&kr.brand===activeBrand)found=true;});});return found;});
+      if(!hasBrand)return;
+    }
+    totalInitiatives++;
+  });
   
   /* Project / Other-project KRs and initiatives are intentionally NOT counted here —
      the dashboard cards reflect OKR-board Key Results and initiatives only. */
@@ -2886,6 +2918,25 @@ window.filterOwner=function(k){
   if(activeView&&activeView.id==='view-timeline')renderTimeline();
   updateMetrics();
   ['view-kr-summary','view-init-summary'].forEach(function(vid){var sub=document.querySelector('#'+vid+' .summary-sub');if(!sub)return;var base=vid==='view-kr-summary'?'All key results across 6 objectives':'All initiatives across every Key Result';sub.textContent=activeOwner?'Filtered by: '+OWNERS[activeOwner]:base;});
+};
+window.filterBrand=function(btn,brand){
+  document.querySelectorAll('.brand-pill').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  activeBrand=brand;
+  applyKRFilters();
+  if(activeBrand!=='all'){
+    document.querySelectorAll('.obj-card').forEach(function(card){
+      card.classList.add('krs-open');
+      var hint=card.querySelector('.obj-kr-toggle span:last-child');
+      if(hint)hint.textContent='Click to collapse';
+    });
+  }
+  renderKRSummary();
+  renderInitSummary();
+  renderBQ();
+  var activeView=document.querySelector('.page-view.active');
+  if(activeView&&activeView.id==='view-timeline')renderTimeline();
+  updateMetrics();
 };
 window.toggleInit=function(el){var d=el.classList.toggle('done');el.innerHTML=d?'&#x2713;':'';var t=el.nextElementSibling;if(t)t.classList.toggle('crossed',d);debouncedSave();};
 window.removeItem=function(btn){
@@ -3164,6 +3215,11 @@ function renderBQ(){
   }
   /* Initiative-level B&Q */
   INITIATIVES.forEach(function(it){
+    /* Brand filter: show initiative if any linked KR matches activeBrand */
+    if(activeBrand!=='all'){
+      var hasBrand=(it.krs||[]).some(function(kn){var found=false;OKRS.forEach(function(o){(o.krs||[]).forEach(function(kr){if(kr.num===kn&&kr.brand===activeBrand)found=true;});});return found;});
+      if(!hasBrand)return;
+    }
     var tag=(it.krs&&it.krs[0])?it.krs[0]:'Init';
     pushItems('init',it.id,tag,it.t||'Initiative');
   });
@@ -3370,6 +3426,7 @@ function renderTimeline(){
     OKRS.forEach(function(o){
       if(tlObjFilter!=='all'&&o.n!==tlObjFilter)return;
       o.krs.forEach(function(kr){
+        if(activeBrand!=='all'&&kr.brand!==activeBrand)return;
         var items=initsForKR(kr.num).filter(function(i){
           if(hideDone&&i.d)return false;
           if(hideNoDates&&!i.date)return false;
@@ -4690,7 +4747,7 @@ window.startApp=function(){
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300015';
+var APP_VERSION='202607010001';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
