@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300010">
+<meta name="app-version" content="202606300012">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -55,7 +55,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .av-IN{background:#e8e5e6;color:#5a0032}.av-JA{background:#e8e5e6;color:#5a0032}
 .av-RI{background:#e8e5e6;color:#5a0032}.av-SA{background:#e8e5e6;color:#5a0032}
 .av-SO{background:#e8e5e6;color:#5a0032}
-.av-AE{background:#e8e5e6;color:#5a0032}.av-CA{background:#e8e5e6;color:#5a0032}.av-DA{background:#e8e5e6;color:#5a0032}
+.av-AE{background:#e8e5e6;color:#5a0032}.av-CA{background:#e8e5e6;color:#5a0032}.av-DA{background:#e8e5e6;color:#5a0032}.av-DH{background:#d6f0f5;color:#003d4a}
 /* Metrics */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.4rem}
 .metric{background:var(--burg);border-radius:var(--r);padding:.9rem 1rem;cursor:pointer;transition:opacity .15s}
@@ -355,6 +355,29 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
 .mtg-empty{font-size:12px;color:var(--text3);font-style:italic;text-align:center;padding:2rem}
 .mtg-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
 
+/* ═══ ANNOUNCEMENTS PAGE ═══ */
+.ann-section{background:var(--bg);border:.5px solid var(--bord);border-radius:var(--rlg);margin-bottom:1.2rem;overflow:hidden;box-shadow:0 1px 4px rgba(90,0,50,.05)}
+.ann-head{padding:14px 18px 12px;border-bottom:.5px solid var(--bord);display:flex;align-items:center;gap:10px}
+.ann-head-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);background:var(--bg3);border-radius:4px;padding:2px 8px;flex-shrink:0}
+.ann-head-title{font-size:14px;font-weight:700;color:var(--burg)}
+.ann-body{padding:16px 18px}
+.ann-textarea{width:100%;min-height:80px;border:.5px solid var(--bord2);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);resize:vertical;line-height:1.5;outline:none;transition:border-color .12s}
+.ann-textarea:focus{border-color:var(--burg)}
+.ann-textarea[readonly]{background:var(--bg2);color:var(--text2);cursor:default}
+.ann-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.ann-ts{font-size:11px;color:var(--text3)}
+.ann-save-btn{background:var(--burg);border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:inherit;transition:background .12s}
+.ann-save-btn:hover{background:var(--burg2)}
+.okr-explainer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.okr-exp-card{background:var(--bg2);border:.5px solid var(--bord);border-radius:8px;padding:12px 14px}
+.okr-exp-icon{font-size:18px;margin-bottom:5px}
+.okr-exp-title{font-size:12px;font-weight:700;color:var(--burg);margin-bottom:3px}
+.okr-exp-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.okr-exp-example{background:var(--lyse);border-radius:8px;padding:12px 14px;margin-top:10px}
+.okr-exp-example-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a0042;margin-bottom:8px}
+.okr-exp-row{display:flex;align-items:flex-start;gap:8px;padding:2px 0;font-size:12px;color:var(--burg2);line-height:1.5}
+.okr-exp-arrow{font-weight:700;flex-shrink:0;color:#7a0042}
+.okr-exp-remember{background:#fff4d6;border:.5px solid rgba(180,83,9,.2);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12px;color:#6b3500;line-height:1.5}
 /* ═══ PROJECTS PAGE ═══ */
 .proj-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
 .proj-filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
@@ -762,6 +785,7 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
   <div class="av-chip" data-k="RI" onclick="filterOwner('RI')"><div class="av av-RI">RI</div><span>Richard</span></div>
   <div class="av-chip" data-k="SA" onclick="filterOwner('SA')"><div class="av av-SA">SA</div><span>Sam</span></div>
   <div class="av-chip" data-k="SO" onclick="filterOwner('SO')"><div class="av av-SO">SO</div><span>Solveig</span></div>
+  <div class="av-chip" data-k="DH" onclick="filterOwner('DH')"><div class="av av-DH">DH</div><span>David</span></div>
 </div>
 <!-- Metrics -->
 <div class="metrics">
@@ -772,7 +796,10 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
 </div>
 <!-- Page tabs -->
 <div class="page-tabs">
-  <button class="page-tab active" data-view="view-projects" onclick="switchPage(this,'view-projects')">
+  <button class="page-tab active" data-view="view-announcements" onclick="switchPage(this,'view-announcements')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Announcements
+  </button>
+  <button class="page-tab" data-view="view-projects" onclick="switchPage(this,'view-projects')">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>CoHoSt Projects
   </button>
   <button class="page-tab" data-view="view-okr" onclick="switchPage(this,'view-okr')">
@@ -805,7 +832,46 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
 </div>
 
 <!-- ══ PROJECTS VIEW ══ -->
-<div id="view-projects" class="page-view active">
+<!-- ══ ANNOUNCEMENTS VIEW ══ -->
+<div id="view-announcements" class="page-view active">
+  <div class="ann-section">
+    <div class="ann-head">
+      <span class="ann-head-label" id="ann-edit-label">Team announcements</span>
+      <span class="ann-head-title">What's new</span>
+    </div>
+    <div class="ann-body">
+      <textarea class="ann-textarea" id="ann-textarea" placeholder="Write an announcement for the team…"></textarea>
+      <div class="ann-meta">
+        <span class="ann-ts" id="ann-ts">No announcements yet.</span>
+        <button class="ann-save-btn" id="ann-save-btn" onclick="saveAnnouncement()">Save announcement</button>
+      </div>
+    </div>
+  </div>
+  <div class="ann-section">
+    <div class="ann-head">
+      <span class="ann-head-title">How we use OKRs</span>
+    </div>
+    <div class="ann-body">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px;line-height:1.6">We use OKRs to separate <strong>the results we want (Outcomes)</strong> from <strong>the work we do (Outputs)</strong>.</p>
+      <div class="okr-explainer-grid">
+        <div class="okr-exp-card"><div class="okr-exp-icon">🎯</div><div class="okr-exp-title">Objectives — where are we going?</div><div class="okr-exp-desc">Inspirational, high-level goals aligned to our Strategic Pillars.</div></div>
+        <div class="okr-exp-card"><div class="okr-exp-icon">📊</div><div class="okr-exp-title">Key Results — how do we measure success?</div><div class="okr-exp-desc">Our Outcomes. Hard, quantifiable business metrics — GOP %, eNPS, Cleanliness Score.</div></div>
+        <div class="okr-exp-card"><div class="okr-exp-icon">🚀</div><div class="okr-exp-title">Initiatives — what projects are we running?</div><div class="okr-exp-desc">Our Outputs. Main projects or workstreams owned by a lead.</div></div>
+        <div class="okr-exp-card"><div class="okr-exp-icon">📅</div><div class="okr-exp-title">Milestones — what are the project phases?</div><div class="okr-exp-desc">Major deliverables and deadlines that keep our Initiatives on track.</div></div>
+      </div>
+      <div class="okr-exp-example">
+        <div class="okr-exp-example-title">Example: putting it together</div>
+        <div class="okr-exp-row"><span class="okr-exp-arrow">▸</span><span><strong>Objective (Guest):</strong> Deliver a distinct brand experience…</span></div>
+        <div class="okr-exp-row"><span class="okr-exp-arrow">└▸</span><span><strong>Key Result:</strong> Raise Guest Cleanliness Score by +0.2</span></div>
+        <div class="okr-exp-row"><span class="okr-exp-arrow">&nbsp;&nbsp;└▸</span><span><strong>Initiative:</strong> Housekeeping Excellence Project</span></div>
+        <div class="okr-exp-row"><span class="okr-exp-arrow">&nbsp;&nbsp;&nbsp;&nbsp;└▸</span><span><strong>Milestone:</strong> Roll out Quality Standard training by Sept 1st</span></div>
+      </div>
+      <div class="okr-exp-remember"><strong>Remember:</strong> Finishing an Initiative on time is a successful <em>output</em>, but success is only achieved when the Key Result actually moves in the right direction — that's the <em>outcome</em>.</div>
+    </div>
+  </div>
+</div>
+
+<div id="view-projects" class="page-view">
   <div class="proj-toolbar">
     <div style="margin-left:auto;display:flex;gap:8px">
       <button class="add-btn" onclick="openProjectModal()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Project</button>
@@ -1567,7 +1633,7 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
 
 <script>
 (function(){
-var OWNERS={AE:'Ane',AN:'Anna',CA:'Camilla',CH:'Christopher',DA:'Daniel',EI:'Eirik',HE:'Helene',IN:'Ingrid',JA:'Jannica',RI:'Richard',SA:'Sam',SO:'Solveig'};
+var OWNERS={AE:'Ane',AN:'Anna',CA:'Camilla',CH:'Christopher',DA:'Daniel',DH:'David',EI:'Eirik',HE:'Helene',IN:'Ingrid',JA:'Jannica',RI:'Richard',SA:'Sam',SO:'Solveig'};
 var PILLARS=[
   {id:'P1',label:'We Care',bc:'ob1',rc:'#5a0032',desc:'We want to push towards sustainable guest experiences in order to become climate neutral'},
   {id:'P2',label:'Guest',  bc:'ob2',rc:'#1a7a4a',desc:'We want to create captivating guest experiences in order to turn guests into ambassadors'},
@@ -1583,6 +1649,7 @@ var OKRS=[];
 var PROJECTS=[];
 
 var STANDALONE_INITS=[];
+var ANNOUNCEMENT={text:'',ts:'',by:''};
 
 var OTHER_PROJECTS=[];
 var INITIATIVES=[];var _openInits={};
@@ -1612,6 +1679,7 @@ window.switchPage=function(btn,viewId){
   document.querySelectorAll('.page-view').forEach(function(v){v.classList.remove('active');});
   btn.classList.add('active');
   document.getElementById(viewId).classList.add('active');
+  if(viewId==='view-announcements')renderAnnouncements();
   if(viewId==='view-kr-summary')renderKRSummary();
   if(viewId==='view-init-summary')renderInitSummary();
   if(viewId==='view-other')renderOtherProjects();
@@ -1891,9 +1959,9 @@ function krHTML(kr){
         '<div class="ke-field sml"><div class="ke-label">Due Date</div><input type="date" class="ke-inp" value="'+esc(kr.date)+'"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Start</div><input type="text" class="ke-inp" value="'+esc(kr.start||'')+'" onblur="recomputeKR(this)"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Target</div><input type="text" class="ke-inp" value="'+esc(kr.tgt)+'" onblur="recomputeKR(this)"></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp kr-cur-inp" value="'+esc(kr.cur)+'" data-prevcur="'+esc(kr.cur)+'" onblur="updateKRCurrent(this)"><div class="kr-cur-stamp">'+curStampText(kr)+'</div></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Brand</div><select class="kr-brand-sel" onchange="debouncedSave()">'+brandOpts(kr.brand||'')+'</select></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Timesc. Current</div><select class="ke-sel" onchange="updateKRTimescale(this)"><option value=""'+((!kr.timescale)?' selected':'')+'>—</option><option value="Month"'+(kr.timescale==='Month'?' selected':'')+'>Month</option><option value="YTD"'+(kr.timescale==='YTD'?' selected':'')+'>YTD</option><option value="R12"'+(kr.timescale==='R12'?' selected':'')+'>R12</option><option value="FY"'+(kr.timescale==='FY'?' selected':'')+'>FY</option></select></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp kr-cur-inp" value="'+esc(kr.cur)+'" data-prevcur="'+esc(kr.cur)+'" oninput="if(!_pendingSave){_pendingSave=true;}" onblur="updateKRCurrent(this)"><div class="kr-cur-stamp">'+curStampText(kr)+'</div></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Brand</div><select class="kr-brand-sel" onfocus="if(!_pendingSave){_pendingSave=true;}" onchange="debouncedSave()">'+brandOpts(kr.brand||'')+'</select></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Timesc. Current</div><select class="ke-sel" onfocus="if(!_pendingSave){_pendingSave=true;}" onchange="updateKRTimescale(this)"><option value=""'+((!kr.timescale)?' selected':'')+'>—</option><option value="Month"'+(kr.timescale==='Month'?' selected':'')+'>Month</option><option value="YTD"'+(kr.timescale==='YTD'?' selected':'')+'>YTD</option><option value="R12"'+(kr.timescale==='R12'?' selected':'')+'>R12</option><option value="FY"'+(kr.timescale==='FY'?' selected':'')+'>FY</option></select></div>'+
         '<div class="ke-field med"><div class="ke-label">Progress &nbsp; <span style="font-size:9px;color:var(--text3);font-weight:500;text-transform:none">Status: </span><select class="ke-sel" style="height:20px;font-size:10px;display:inline-block;width:auto;padding:1px 5px" onchange="updateStatus(this)">'+stSel(kr.st)+'</select></div>'+
           '<div class="ke-prog-wrap"><div class="kr-mini-prog" style="flex:1;height:6px"><div class="kr-body-fill kf-'+kr.st+'" style="height:100%;border-radius:99px;width:'+_krBarW+'%"></div></div>'+
           '<span class="kr-computed-pct'+(_krComp===null?' nopct':'')+'">'+(_krComp===null?'\u2014':_krComp+'%')+'</span></div></div>'+
@@ -2256,6 +2324,35 @@ window.updateKRProject=function(sel){
 };
 
 /* KR Summary */
+function fmtAnnTs(iso){if(!iso)return '';var d=new Date(iso);return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+function renderAnnouncements(){
+  var ta=document.getElementById('ann-textarea');
+  var ts=document.getElementById('ann-ts');
+  var btn=document.getElementById('ann-save-btn');
+  var lbl=document.getElementById('ann-edit-label');
+  if(!ta)return;
+  ta.value=ANNOUNCEMENT.text||'';
+  if(ANNOUNCEMENT.ts){
+    var byName=(ANNOUNCEMENT.by&&OWNERS[ANNOUNCEMENT.by])?OWNERS[ANNOUNCEMENT.by]:'';
+    ts.textContent='Last updated: '+fmtAnnTs(ANNOUNCEMENT.ts)+(byName?' · '+byName:'');
+  } else {
+    ts.textContent='No announcements yet.';
+  }
+  var isAdmin=(currentUser==='HE');
+  ta.readOnly=!isAdmin;
+  ta.style.background=isAdmin?'var(--bg)':'var(--bg2)';
+  ta.style.cursor=isAdmin?'text':'default';
+  if(btn)btn.style.display=isAdmin?'':'none';
+  if(lbl)lbl.textContent=isAdmin?'Admin only \u2014 editing':'Team announcements';
+}
+window.saveAnnouncement=function(){
+  var ta=document.getElementById('ann-textarea');if(!ta)return;
+  var text=ta.value;
+  ANNOUNCEMENT={text:text,ts:new Date().toISOString(),by:currentUser||''};
+  var ts=document.getElementById('ann-ts');
+  if(ts){var byName=(currentUser&&OWNERS[currentUser])?OWNERS[currentUser]:'';ts.textContent='Last updated: '+fmtAnnTs(ANNOUNCEMENT.ts)+(byName?' · '+byName:'');}
+  debouncedSave();
+};
 function renderKRSummary(){
   var tbody=document.getElementById('kr-smry-body');if(!tbody)return;tbody.innerHTML='';
   /* Objective KRs */
@@ -3448,7 +3545,7 @@ function rebuildAll(){
       }
     });
   });
-  renderProjects();refreshObjUI();renderKRSummary();renderInitSummary();updateMetrics();renderOtherProjects();renderBacklog();
+  renderProjects();refreshObjUI();renderKRSummary();renderInitSummary();updateMetrics();renderOtherProjects();renderBacklog();renderAnnouncements();
 }
 
 /* ═══ OTHER PROJECTS ═══ */
@@ -4484,8 +4581,11 @@ function applyRemoteState(data){
   INITIATIVES.length=0;(data.initiatives||[]).forEach(function(it){INITIATIVES.push(normInit(it));});mergeKrInitsIntoGlobal();
   OTHER_PROJECTS.length=0;(data.otherProjects||[]).forEach(function(op){if(!op.status)op.status='active';if(!op.own)op.own=op.people||[];if(!op.projectKrs)op.projectKrs=[];if(!op.blockers)op.blockers=[];if(!op.questions)op.questions=[];if(!op.tasks)op.tasks=[];if(!op.files)op.files=[];if(!op.tags)op.tags=[];if(!op.desc)op.desc=op.note||'';if(op.prog===undefined)op.prog=0;OTHER_PROJECTS.push(op);});
   BACKLOG.length=0;(data.backlog||[]).forEach(function(i){if(!Array.isArray(i.krLinks))i.krLinks=i.okrLink?[i.okrLink]:[];if(!i.okrLink&&i.krLinks.length)i.okrLink=i.krLinks[0];BACKLOG.push(i);});MEETINGS.length=0;(data.meetings||[]).forEach(function(m){if(!m.tasks)m.tasks=[];MEETINGS.push(m);});LINKS.length=0;(data.links||[]).forEach(function(l){LINKS.push(l);});
+  if(data.announcement&&typeof data.announcement==='object')ANNOUNCEMENT=data.announcement;
   _remoteLoaded=true;  // safe to save now
   rebuildAll();showSyncStatus('live',data.ts,data.updatedBy);_lastRemoteTs=data.ts||'';isApplyingRemote=false;
+  // Re-render announcements if that page is currently visible (so team sees new announcement on next poll)
+  var annView=document.getElementById('view-announcements');if(annView&&annView.classList.contains('active'))renderAnnouncements();
 }
 
 window.saveWorkspace=function(){
@@ -4500,7 +4600,7 @@ window.saveWorkspace=function(){
     fetchRemote(function(data){if(data)applyRemoteState(data);});
     return;
   }
-  var state={v:5,ts:new Date().toISOString(),updatedBy:currentUser||'',okrs:JSON.parse(JSON.stringify(OKRS)),projects:JSON.parse(JSON.stringify(PROJECTS)),standaloneInits:JSON.parse(JSON.stringify(STANDALONE_INITS)),initiatives:JSON.parse(JSON.stringify(INITIATIVES)),otherProjects:JSON.parse(JSON.stringify(OTHER_PROJECTS)),backlog:JSON.parse(JSON.stringify(BACKLOG)),meetings:JSON.parse(JSON.stringify(MEETINGS)),links:JSON.parse(JSON.stringify(LINKS))};
+  var state={v:5,ts:new Date().toISOString(),updatedBy:currentUser||'',okrs:JSON.parse(JSON.stringify(OKRS)),projects:JSON.parse(JSON.stringify(PROJECTS)),standaloneInits:JSON.parse(JSON.stringify(STANDALONE_INITS)),initiatives:JSON.parse(JSON.stringify(INITIATIVES)),otherProjects:JSON.parse(JSON.stringify(OTHER_PROJECTS)),backlog:JSON.parse(JSON.stringify(BACKLOG)),meetings:JSON.parse(JSON.stringify(MEETINGS)),links:JSON.parse(JSON.stringify(LINKS)),announcement:JSON.parse(JSON.stringify(ANNOUNCEMENT))};
   showSyncStatus('saving');isSaving=true;_pendingSave=true;
   writeRemote(state,function(err){
     isSaving=false;
@@ -4574,7 +4674,7 @@ window.startApp=function(){
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300010';
+var APP_VERSION='202606300012';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
