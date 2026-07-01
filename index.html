@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-version" content="202606300012">
+<meta name="app-version" content="202606300013">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffc0bd'/%3E%3Cpolygon points='3,15 16,5 29,15' fill='%23fc5e58'/%3E%3Cpolygon points='8,15 16,9 24,15' fill='%23e04845'/%3E%3Crect x='5' y='14' width='22' height='15' rx='2' fill='%235a0032'/%3E%3Crect x='7' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='14' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='21' y='16' width='4' height='3.5' rx='1' fill='%23ffc0bd'/%3E%3Crect x='13.5' y='22' width='5' height='7' rx='2.5' fill='%23ffc0bd'/%3E%3C/svg%3E">
 <title>CoHoSt SPP Projects &amp; OKRs</title>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -778,6 +778,7 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
   <div class="av-chip" data-k="CA" onclick="filterOwner('CA')"><div class="av av-CA">CA</div><span>Camilla</span></div>
   <div class="av-chip" data-k="CH" onclick="filterOwner('CH')"><div class="av av-CH">CH</div><span>Christopher</span></div>
   <div class="av-chip" data-k="DA" onclick="filterOwner('DA')"><div class="av av-DA">DA</div><span>Daniel</span></div>
+  <div class="av-chip" data-k="DH" onclick="filterOwner('DH')"><div class="av av-DH">DH</div><span>David</span></div>
   <div class="av-chip" data-k="EI" onclick="filterOwner('EI')"><div class="av av-EI">EI</div><span>Eirik</span></div>
   <div class="av-chip" data-k="HE" onclick="filterOwner('HE')"><div class="av av-HE">HE</div><span>Helene</span></div>
   <div class="av-chip" data-k="IN" onclick="filterOwner('IN')"><div class="av av-IN">IN</div><span>Ingrid</span></div>
@@ -785,7 +786,6 @@ tr.kr-open .kr-smry-caret{transform:rotate(90deg)}
   <div class="av-chip" data-k="RI" onclick="filterOwner('RI')"><div class="av av-RI">RI</div><span>Richard</span></div>
   <div class="av-chip" data-k="SA" onclick="filterOwner('SA')"><div class="av av-SA">SA</div><span>Sam</span></div>
   <div class="av-chip" data-k="SO" onclick="filterOwner('SO')"><div class="av av-SO">SO</div><span>Solveig</span></div>
-  <div class="av-chip" data-k="DH" onclick="filterOwner('DH')"><div class="av av-DH">DH</div><span>David</span></div>
 </div>
 <!-- Metrics -->
 <div class="metrics">
@@ -1959,9 +1959,9 @@ function krHTML(kr){
         '<div class="ke-field sml"><div class="ke-label">Due Date</div><input type="date" class="ke-inp" value="'+esc(kr.date)+'"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Start</div><input type="text" class="ke-inp" value="'+esc(kr.start||'')+'" onblur="recomputeKR(this)"></div>'+
         '<div class="ke-field sml"><div class="ke-label">Target</div><input type="text" class="ke-inp" value="'+esc(kr.tgt)+'" onblur="recomputeKR(this)"></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp kr-cur-inp" value="'+esc(kr.cur)+'" data-prevcur="'+esc(kr.cur)+'" oninput="if(!_pendingSave){_pendingSave=true;}" onblur="updateKRCurrent(this)"><div class="kr-cur-stamp">'+curStampText(kr)+'</div></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Brand</div><select class="kr-brand-sel" onfocus="if(!_pendingSave){_pendingSave=true;}" onchange="debouncedSave()">'+brandOpts(kr.brand||'')+'</select></div>'+
-        '<div class="ke-field sml"><div class="ke-label">Timesc. Current</div><select class="ke-sel" onfocus="if(!_pendingSave){_pendingSave=true;}" onchange="updateKRTimescale(this)"><option value=""'+((!kr.timescale)?' selected':'')+'>—</option><option value="Month"'+(kr.timescale==='Month'?' selected':'')+'>Month</option><option value="YTD"'+(kr.timescale==='YTD'?' selected':'')+'>YTD</option><option value="R12"'+(kr.timescale==='R12'?' selected':'')+'>R12</option><option value="FY"'+(kr.timescale==='FY'?' selected':'')+'>FY</option></select></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Current</div><input type="text" class="ke-inp kr-cur-inp" value="'+esc(kr.cur)+'" data-prevcur="'+esc(kr.cur)+'" oninput="markPendingSave()" onblur="updateKRCurrent(this)"><div class="kr-cur-stamp">'+curStampText(kr)+'</div></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Brand</div><select class="kr-brand-sel" onfocus="markPendingSave()" onchange="debouncedSave()">'+brandOpts(kr.brand||'')+'</select></div>'+
+        '<div class="ke-field sml"><div class="ke-label">Timesc. Current</div><select class="ke-sel" onfocus="markPendingSave()" onchange="updateKRTimescale(this)"><option value=""'+((!kr.timescale)?' selected':'')+'>—</option><option value="Month"'+(kr.timescale==='Month'?' selected':'')+'>Month</option><option value="YTD"'+(kr.timescale==='YTD'?' selected':'')+'>YTD</option><option value="R12"'+(kr.timescale==='R12'?' selected':'')+'>R12</option><option value="FY"'+(kr.timescale==='FY'?' selected':'')+'>FY</option></select></div>'+
         '<div class="ke-field med"><div class="ke-label">Progress &nbsp; <span style="font-size:9px;color:var(--text3);font-weight:500;text-transform:none">Status: </span><select class="ke-sel" style="height:20px;font-size:10px;display:inline-block;width:auto;padding:1px 5px" onchange="updateStatus(this)">'+stSel(kr.st)+'</select></div>'+
           '<div class="ke-prog-wrap"><div class="kr-mini-prog" style="flex:1;height:6px"><div class="kr-body-fill kf-'+kr.st+'" style="height:100%;border-radius:99px;width:'+_krBarW+'%"></div></div>'+
           '<span class="kr-computed-pct'+(_krComp===null?' nopct':'')+'">'+(_krComp===null?'\u2014':_krComp+'%')+'</span></div></div>'+
@@ -4534,6 +4534,7 @@ window.toggleSettingsMenu=function(){var menu=document.getElementById('settings-
 var OWNERS_MAP={AE:'Ane',AN:'Anna',CA:'Camilla',CH:'Christopher',DA:'Daniel',EI:'Eirik',HE:'Helene',IN:'Ingrid',JA:'Jannica',RI:'Richard',SA:'Sam',SO:'Solveig'};
 var currentUser=localStorage.getItem('spp_user')||'';
 var saveTimer=null,isSaving=false,isApplyingRemote=false,_pollTimer=null,_lastRemoteTs='',_pendingSave=false;
+window.markPendingSave=function(){_pendingSave=true;};
 var _retryTimer=null,_retryAttempt=0;
 var _remoteLoaded=false;
 var _newVersionAvailable=false; // GUARD: never save until Firebase has loaded at least once
@@ -4639,7 +4640,7 @@ function pollRemote(){
   fetchRemote(function(data,err){
     if(err||!data)return;
     if(isSaving||_pendingSave)return; // re-check: a save may have started while this request was in flight
-    if(data.ts&&data.ts!==_lastRemoteTs){
+    if(data.ts&&data.ts>_lastRemoteTs){
       if(isUserEditing())return; // defer — don't rebuild under an active edit, retry next poll
       applyRemoteState(data);
     }
@@ -4674,7 +4675,7 @@ window.startApp=function(){
 
 
 /* ═══ VERSION / CACHE CHECK ═══ */
-var APP_VERSION='202606300012';
+var APP_VERSION='202606300013';
 (function(){
   var POLL_INTERVAL=5*60*1000; // check every 5 min
   function checkVersion(){
